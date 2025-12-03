@@ -1,0 +1,13 @@
+import { Navigation } from "@/components/Navigation";
+
+export default function Policy(){
+  return (
+    <div className="min-h-screen bg-background text-foreground">
+      <Navigation />
+      <main className="container mx-auto px-6 py-24 text-center">
+        <h1 className="text-3xl font-bold mb-4">Policy</h1>
+        <p className="max-w-2xl mx-auto text-slate-600">Important legal and policy information — placeholder page.</p>
+      </main>
+    </div>
+  );
+}

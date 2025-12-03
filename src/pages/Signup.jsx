@@ -7,6 +7,7 @@ import { googleProvider } from "../firebase";
 
 // Firebase
 import { auth } from "../firebase";
+import { useAuth } from '@/context/AuthContext'
 import { createUserWithEmailAndPassword } from "firebase/auth";
 
 // Backend URL
@@ -14,6 +15,7 @@ const API_URL = import.meta.env.VITE_API_URL;
 
 export default function Signup() {
   const navigate = useNavigate();
+  const { user, loading: authLoading } = useAuth();
 
   // FORM STATES
   const [name, setName] = useState("");
@@ -94,7 +96,7 @@ useEffect(() => {
     // 2️⃣ USER ALREADY EXISTS → DIRECT LOGIN SUCCESS
     if (data.exists) {
       showToast("Login Successful 🎉", "success");
-      return setTimeout(() => navigate("/home"), 1000);
+      return setTimeout(() => navigate("/"), 1000);
     }
 
     // 3️⃣ NEW GOOGLE USER → ASK FOR USERNAME + MOBILE
@@ -135,7 +137,7 @@ async function handleGoogleComplete() {
 
   if (data.status === "success") {
     showToast("Login Successful 🎉", "success");
-    return setTimeout(() => navigate("/home"), 800);
+    return setTimeout(() => navigate("/"), 800);
   }
 
   showToast("Something went wrong ❌");
@@ -218,8 +220,13 @@ async function handleGoogleComplete() {
 
       if (data.status === "success") {
         showToast("Signup Successful 🎉", "success");
-        setTimeout(() => navigate("/login"), 1500);
+        // After signup we can redirect into the app (firebase signs user in)
+        setTimeout(() => navigate("/"), 1500);
       } else {
+          // Redirect away if the user is already authenticated
+          useEffect(() => {
+            if (!authLoading && user) navigate('/');
+          }, [user, authLoading, navigate]);
         showToast(data.error || "Signup error");
       }
 

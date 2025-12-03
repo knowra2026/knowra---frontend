@@ -6,6 +6,7 @@ import { signInWithPopup } from "firebase/auth";
 import { googleProvider } from "../firebase";
 
 import { auth } from "../firebase";
+import { useAuth } from '@/context/AuthContext'
 import { signInWithEmailAndPassword } from "firebase/auth";
 
 // Backend URL
@@ -13,6 +14,7 @@ const API_URL = import.meta.env.VITE_API_URL;
 
 export default function Login() {
   const navigate = useNavigate();
+  const { user, loading: authLoading } = useAuth()
   const [gUsernameUsed, setGUsernameUsed] = useState(false);
   const [gMobileUsed, setGMobileUsed] = useState(false);
   
@@ -55,9 +57,9 @@ export default function Login() {
     const data = await res.json();
 
     // 2️⃣ USER ALREADY EXISTS → DIRECT LOGIN SUCCESS
-    if (data.exists) {
-      showToast("Login Successful 🎉", "success");
-      return setTimeout(() => navigate("/home"), 1000);
+      if (data.exists) {
+        showToast("Login Successful 🎉", "success");
+        return setTimeout(() => navigate("/"), 1000);
     }
 
     // 3️⃣ NEW GOOGLE USER → ASK FOR USERNAME + MOBILE
@@ -108,6 +110,10 @@ useEffect(() => {
   return () => clearTimeout(delay);
 }, [gMobile]);
 
+  // If user is already signed in, send them to the app root
+  useEffect(() => {
+    if (!authLoading && user) navigate('/');
+  }, [user, authLoading, navigate]);
 
 
 
@@ -143,7 +149,8 @@ useEffect(() => {
     await signInWithEmailAndPassword(auth, finalEmail, password);
 
     showToast("Login Successful 🎉", "success");
-    setTimeout(() => navigate("/home"), 1500);
+    // Redirect to root after login
+        return setTimeout(() => navigate("/"), 1500);
 
   } catch (error) {
     setLoading(false);
@@ -162,6 +169,7 @@ useEffect(() => {
     // Other errors
     showToast("Login failed. Please try again.");
   }
+
 
   setLoading(false);
 }
@@ -187,7 +195,7 @@ async function handleGoogleComplete() {
 
   if (data.status === "success") {
     showToast("Login Successful 🎉", "success");
-    return setTimeout(() => navigate("/home"), 800);
+    return setTimeout(() => navigate("/"), 800);
   }
 
   showToast("Something went wrong ❌");
