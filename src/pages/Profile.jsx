@@ -16,9 +16,9 @@ const Profile = () => {
     // If auth is still loading, wait
     if (loading) return;
 
-    // If user is not authenticated, redirect to login
+    // If user is not authenticated, show a guest placeholder profile
     if (!user) {
-      navigate('/login');
+      setProfile({ name: 'Guest', email: '', mobile: '' });
       return;
     }
 
@@ -40,7 +40,7 @@ const Profile = () => {
     };
 
     fetchProfile();
-  }, [user, loading, navigate]);
+  }, [user, loading]);
 
   // derive some stats for display (placeholder fallback values)
   const courses = profile?.coursesEnrolled ?? 0;

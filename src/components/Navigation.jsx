@@ -40,7 +40,6 @@ export const Navigation = () => {
               </NavLink>
               <NavLink
                 to="/skill-courses"
-                onClick={(e) => { if (!user) { e.preventDefault(); navigate('/login'); } }}
                 className="relative px-4 py-2 rounded-md text-sm font-medium text-slate-600 hover:text-slate-900 hover:bg-slate-50 transition-colors"
                 activeClassName="text-slate-900 bg-slate-100 shadow-sm"
               >
@@ -48,7 +47,6 @@ export const Navigation = () => {
               </NavLink>
               <NavLink
                 to="/guru-ai"
-                onClick={(e) => { if (!user) { e.preventDefault(); navigate('/login'); } }}
                 className="relative px-4 py-2 rounded-md text-sm font-medium text-slate-600 hover:text-slate-900 hover:bg-slate-50 transition-colors"
                 activeClassName="text-slate-900 bg-slate-100 shadow-sm"
               >
@@ -148,7 +146,6 @@ export const Navigation = () => {
           </NavLink>
           <NavLink 
             to="/skill-courses" 
-            onClick={(e) => { if (!user) { e.preventDefault(); navigate('/login'); } }}
             className="flex flex-col items-center gap-1 text-muted-foreground transition-colors px-3 py-2 rounded-lg hover:bg-muted/40"
             activeClassName="text-primary bg-primary/10 ring-1 ring-primary/20"
           >
@@ -157,7 +154,6 @@ export const Navigation = () => {
           </NavLink>
           <NavLink 
             to="/guru-ai" 
-            onClick={(e) => { if (!user) { e.preventDefault(); navigate('/login'); } }}
             className="flex flex-col items-center gap-1 text-muted-foreground transition-colors px-3 py-2 rounded-lg hover:bg-muted/40"
             activeClassName="text-primary bg-primary/10 ring-1 ring-primary/20"
           >

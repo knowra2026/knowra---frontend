@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "@/context/AuthContext";
 import { Navigation } from "@/components/Navigation";
+import AuthPrompt from "@/components/AuthPrompt";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -9,13 +10,11 @@ import { Clock, Award, ExternalLink } from "lucide-react";
 
 const SkillCourses = () => {
   const [selectedCategory, setSelectedCategory] = useState("all");
+  const [authPromptOpen, setAuthPromptOpen] = useState(false);
+  const [authPromptTimer, setAuthPromptTimer] = useState(null);
   const { user, loading } = useAuth();
   const navigate = useNavigate();
-
-  useEffect(() => {
-    // Redirect to login if auth finished loading and no user
-    if (!loading && !user) navigate('/login');
-  }, [user, loading, navigate]);
+  // Courses page remains viewable to all users.
 
   const courses = [
     {
@@ -81,9 +80,42 @@ const SkillCourses = () => {
     ? courses 
     : courses.filter(course => course.category === selectedCategory);
 
+  const handleStartCourse = () => {
+    if (!user) {
+      setAuthPromptOpen(true);
+    } else {
+      navigate('/profile');
+    }
+  };
+
+  const handleAuthPromptChange = (open) => {
+    setAuthPromptOpen(open);
+    
+    if (authPromptTimer) {
+      clearTimeout(authPromptTimer);
+      setAuthPromptTimer(null);
+    }
+
+    if (!open && !user) {
+      const timer = setTimeout(() => {
+        setAuthPromptOpen(true);
+      }, 3000);
+      setAuthPromptTimer(timer);
+    }
+  };
+
+  useEffect(() => {
+    return () => {
+      if (authPromptTimer) {
+        clearTimeout(authPromptTimer);
+      }
+    };
+  }, [authPromptTimer]);
+
   return (
     <div className="min-h-screen bg-background pb-20 md:pb-0">
       <Navigation />
+      <AuthPrompt open={authPromptOpen} onOpenChange={handleAuthPromptChange} />
       
       <main className="container mx-auto px-6 pt-10 md:pt-32">
         <div className="max-w-6xl mx-auto">
@@ -132,7 +164,10 @@ const SkillCourses = () => {
                     <Badge variant="outline">{course.level}</Badge>
                   </div>
 
-                  <Button className="w-full bg-sky-500 hover:bg-sky-600 text-white">
+                  <Button
+                    onClick={handleStartCourse}
+                    className="w-full bg-sky-500 hover:bg-sky-600 text-white"
+                  >
                     Start Course
                     <ExternalLink className="h-4 w-4 ml-2" />
                   </Button>
