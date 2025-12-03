@@ -1,7 +1,7 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import logomark from "../assets/logo.png";
-import logoname from "../assets/Logoname.png";
+import logoname from "../assets/logoname-b.png";
 import { signInWithPopup } from "firebase/auth";
 import { googleProvider } from "../firebase";
 
@@ -24,6 +24,10 @@ export default function Login() {
   const [gUsername, setGUsername] = useState("");
    const [gMobile, setGMobile] = useState("");
 
+  const emailInputRef = useRef(null);
+  const passwordInputRef = useRef(null);
+  const loginButtonRef = useRef(null);
+
   const [showPass, setShowPass] = useState(false);
 
   // ERROR STATES
@@ -40,6 +44,21 @@ export default function Login() {
   const showToast = (msg, type = "error") => {
     setToast({ msg, type });
     setTimeout(() => setToast(null), 2500);
+  };
+
+  // Handle Enter key to navigate between fields
+  const handleEmailKeyDown = (e) => {
+    if (e.key === "Enter") {
+      e.preventDefault();
+      passwordInputRef.current?.focus();
+    }
+  };
+
+  const handlePasswordKeyDown = (e) => {
+    if (e.key === "Enter") {
+      e.preventDefault();
+      loginButtonRef.current?.click();
+    }
   };
 
   
@@ -219,44 +238,45 @@ async function handleGoogleComplete() {
         </div>
       )}
 {googleUser && (
-  <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-    <div className="bg-[#222738] p-6 rounded-xl w-[350px] text-white shadow-lg relative">
+  <div className="fixed inset-0 bg-black bg-opacity-40 flex items-center justify-center z-50">
+    <div className="bg-white p-8 rounded-2xl w-[350px] text-black shadow-2xl relative">
 
       {/* CLOSE BUTTON */}
       <button
         onClick={() => setGoogleUser(null)}
-        className="absolute top-3 right-3 text-gray-300 hover:text-white text-xl"
+        className="absolute top-4 right-4 text-slate-400 hover:text-slate-700 text-xl font-bold"
       >
         ✕
       </button>
 
-      <h2 className="text-xl font-semibold mb-4 text-center">Complete Profile</h2>
+      <h2 className="text-2xl font-bold mb-2 text-center text-black">Complete Profile</h2>
+      <p className="text-center text-slate-600 text-sm mb-6">Add a few details to finish signing up</p>
 
       {/* USERNAME */}
-      <label className="text-sm">Username</label>
+      <label className="text-sm font-semibold text-black block mb-2">Username</label>
       <input
         type="text"
-        className="w-full p-3 bg-[#2C3143] rounded-xl mt-1 outline-none"
+        className="w-full p-3 bg-white rounded-lg mt-0 mb-2 text-black outline-none border-2 border-sky-200 focus:border-sky-500 placeholder-gray-400"
         value={gUsername}
         onChange={(e) => setGUsername(e.target.value)}
         placeholder="Create username"
       />
       {gUsernameUsed && (
-        <p className="text-red-400 text-xs mt-1">Username already taken</p>
+        <p className="text-red-600 text-xs mt-1 font-medium">Username already taken</p>
       )}
 
       {/* MOBILE */}
-      <label className="text-sm mt-4">Mobile Number</label>
+      <label className="text-sm font-semibold text-black block mb-2 mt-4">Mobile Number</label>
       <input
         type="tel"
         maxLength="10"
-        className="w-full p-3 bg-[#2C3143] rounded-xl mt-1 outline-none"
+        className="w-full p-3 bg-white rounded-lg mt-0 mb-2 text-black outline-none border-2 border-sky-200 focus:border-sky-500 placeholder-gray-400"
         value={gMobile}
         onChange={(e) => setGMobile(e.target.value.replace(/\D/g, ""))}
         placeholder="Enter mobile number"
       />
       {gMobileUsed && (
-        <p className="text-red-400 text-xs mt-1">Mobile already registered</p>
+        <p className="text-red-600 text-xs mt-1 font-medium">Mobile already registered</p>
       )}
 
       {/* CONTINUE BUTTON */}
@@ -268,14 +288,14 @@ async function handleGoogleComplete() {
           gUsernameUsed ||
           gMobileUsed
         }
-        className={`w-full py-3 rounded-xl font-semibold mt-4
+        className={`w-full py-3 rounded-lg font-semibold mt-6 transition-all duration-200
           ${
             gUsername.trim().length >= 3 &&
             gMobile.length === 10 &&
             !gUsernameUsed &&
             !gMobileUsed
-              ? "bg-blue-500 hover:bg-blue-600"
-              : "bg-[#3a3f52] opacity-40 cursor-not-allowed"
+              ? "bg-sky-500 hover:bg-sky-600 text-white shadow-md"
+              : "bg-sky-100 opacity-60 cursor-not-allowed text-slate-400"
           }
         `}
       >
@@ -290,149 +310,154 @@ async function handleGoogleComplete() {
      
 
       <div
-        className="min-h-screen flex items-center justify-center"
-        style={{ background: "linear-gradient(145deg,#25293C 0%,#646FA2 100%)" }}
+        className="min-h-screen flex items-center justify-center bg-white"
       >
         {/* MAIN CARD */}
         <div className="
-          flex w-[950px] h-[530px] rounded-2xl shadow-2xl overflow-hidden
-          bg-[#222738]
-          max-md:flex-col max-md:w-[92%] max-md:h-auto max-md:py-8 max-md:rounded-xl
+          flex w-[950px] rounded-3xl shadow-2xl overflow-hidden
+          bg-white
+          max-md:flex-col max-md:w-[92%] max-md:h-auto max-md:py-8 max-md:rounded-2xl
         ">
 
           {/* LEFT SIDE */}
           <div className="
-            w-[48%] flex flex-col items-center justify-center gap-3 border-r border-gray-700/30
-            max-md:w-full max-md:border-none max-md:mb-6 max-md:mt-4
+            w-[48%] flex flex-col items-center justify-center gap-4 border-r border-sky-100
+            bg-gradient-to-br from-sky-50 to-white
+            max-md:w-full max-md:border-none max-md:mb-6 max-md:mt-4 max-md:py-8
           ">
-           <img src={logomark} alt="Knowra logo mark" className="w-[230px] max-md:w-[110px] user-select-none pointer-events-none select-none" draggable="false" />
-                       <img src={logoname} alt="Knowra logo name" className="w-[260px] max-md:w-[140px] user-select-none pointer-events-none select-none" draggable="false" />
+           <img src={logomark} alt="Knowra logo mark" className="w-[200px] max-md:w-[100px] user-select-none pointer-events-none select-none" draggable="false" />
+           <img src={logoname} alt="Knowra logo name" className="w-[240px] max-md:w-[130px] user-select-none pointer-events-none select-none" draggable="false" />
           </div>
 
           {/* RIGHT SIDE */}
-          <div className="w-[52%] flex flex-col justify-center px-12 text-white max-md:w-full max-md:px-6">
+          <div className="w-[52%] flex flex-col justify-between px-12 text-black max-md:w-full max-md:px-6 py-8">
 
-            <h1 className="text-3xl font-bold text-center mb-1">Welcome Back</h1>
-            <p className="text-center text-gray-300 text-sm mb-7">
-              Sign in to continue learning
-            </p>
+            <div>
+              <h1 className="text-3xl font-bold text-center mb-1 text-black">Welcome Back</h1>
+              <p className="text-center text-sky-600 text-sm mb-8">
+                Sign in to continue learning
+              </p>
 
-            {/* EMAIL */}
-            <label className="text-[13px] font-semibold">Email/User name </label>
-            <input
-              type="email"
-              inputMode="text"
-              pattern=".*"
-              onInvalid={(e) => e.preventDefault()}
-              placeholder="Enter your email or username"
-               value={email}
-               onChange={(e) => {
-              setEmail(e.target.value);
-               setEmailError("");
-            }}
-            className={`
-              w-full bg-[#2C3143] p-3 rounded-xl mt-1 mb-1 text-gray-200 outline-none 
-              border ${emailError ? "border-red-500" : "border-transparent"}
-              focus:border-blue-400
-            `}
-            />
-
-            {emailError && <p className="text-red-400 text-xs mb-3">{emailError}</p>}
-
-            {/* PASSWORD */}
-            <label className="text-[13px] font-semibold">Password</label>
-            <div className="relative">
+              {/* EMAIL */}
+              <label className="text-sm font-semibold text-black mb-2">Email or Username</label>
               <input
-                type={showPass ? "text" : "password"}
-                placeholder="Enter your password"
-                value={password}
-                onChange={(e) => {
-                  setPassword(e.target.value);
-                    setPassError("");
-                  }}
-                  className={`
-                    w-full bg-[#2C3143] p-3 rounded-xl pr-12 mt-1 text-gray-200 outline-none 
-                    border ${passError ? "border-red-500" : "border-transparent"}
-                    focus:border-blue-400
-                  `}
-                  />
-
-                  {password && (
-                  <button
-                    type="button"
-                    onClick={() => setShowPass(!showPass)}
-                    aria-pressed={showPass}
-                    aria-label={showPass ? "Hide password" : "Show password"}
-                    title={showPass ? "Hide password" : "Show password"}
-                    className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-300 flex items-center"
-                  >
-                    {showPass ? (
-                    /* eye-off (official-like) */
-                    <svg xmlns="http://www.w3.org/2000/svg" className="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-                      <path d="M3 3l18 18"></path>
-                      <path d="M10.47 10.47A3 3 0 0113.53 13.53"></path>
-                      <path d="M9.88 5.06C11.07 5 12.34 5.25 13.53 5.72"></path>
-                      <path d="M2.46 12.01C3.73 7.95 7.52 5 12 5c1.2 0 2.36.2 3.44.57"></path>
-                      <path d="M21.54 12.01C20.27 16.07 16.48 19 12 19c-1.2 0-2.36-.2-3.44-.57"></path>
-                    </svg>
-                    ) : (
-                    /* eye (official-like) */
-                    <svg xmlns="http://www.w3.org/2000/svg" className="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-                      <path d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
-                      <path d="M2.46 12C3.73 7.95 7.52 5 12 5c4.48 0 8.27 2.95 9.54 7-1.27 4.05-5.06 7-9.54 7-4.48 0-8.27-2.95-9.54-7z"></path>
-                    </svg>
-                    )}
-                  </button>
-                  )}
-                </div>
-                {passError && <p className="text-red-400 text-xs mt-1">{passError}</p>}
-
-                {/* FORGOT */}
-                      <div className="text-right mt-1 mb-5">
-                        <Link to="/forgot" className="text-blue-400 hover:underline text-xs">
-                        Forgot Password?
-                        </Link>
-                      </div>
-
-                      {/* LOGIN BUTTON */}
-            <button
-              onClick={handleLogin}
-              disabled={!isValid || loading}
+                ref={emailInputRef}
+                type="text"
+                inputMode="email"
+                onKeyDown={handleEmailKeyDown}
+                placeholder="Enter your email or username"
+                 value={email}
+                 onChange={(e) => {
+                setEmail(e.target.value);
+                 setEmailError("");
+              }}
               className={`
-                w-full py-3 text-lg font-semibold rounded-xl flex items-center justify-center gap-2
-                ${isValid && !loading
-                  ? "bg-blue-500 hover:bg-blue-600 hover:scale-[1.05] shadow-[0_0_15px_#4c8ffd]"
-                  : "bg-[#3a3f52] opacity-40 cursor-not-allowed"}
+                w-full bg-white p-3 rounded-lg mt-0 mb-2 text-black outline-none 
+                border-2 placeholder-gray-400
+                ${emailError ? "border-red-500" : "border-sky-200"}
+                focus:border-sky-500 focus:ring-1 focus:ring-sky-200 transition-colors
               `}
-            >
-              {loading ? (
-                <div className="w-6 h-6 mx-auto border-4 border-white border-t-transparent rounded-full animate-spin"></div>
-              ) : (
-                "Login"
-              )}
-            </button>
+              />
 
-            {/* OR */}
-            <div className="flex items-center gap-3 my-4">
-              <div className="h-[1px] bg-gray-600 flex-1"></div>
-              <p className="text-gray-400 text-xs">OR CONTINUE WITH</p>
-              <div className="h-[1px] bg-gray-600 flex-1"></div>
+              {emailError && <p className="text-red-600 text-xs mb-3 font-medium">{emailError}</p>}
+
+              {/* PASSWORD */}
+              <label className="text-sm font-semibold text-black mb-2">Password</label>
+              <div className="relative">
+                <input
+                  ref={passwordInputRef}
+                  type={showPass ? "text" : "password"}
+                  placeholder="Enter your password"
+                  value={password}
+                  onKeyDown={handlePasswordKeyDown}
+                  onChange={(e) => {
+                    setPassword(e.target.value);
+                      setPassError("");
+                    }}
+                    className={`
+                      w-full bg-white p-3 rounded-lg pr-12 mt-0 mb-2 text-black outline-none 
+                      border-2 placeholder-gray-400
+                      ${passError ? "border-red-500" : "border-sky-200"}
+                      focus:border-sky-500 focus:ring-1 focus:ring-sky-200 transition-colors
+                    `}
+                    />
+
+                    {password && (
+                    <button
+                      type="button"
+                      onClick={() => setShowPass(!showPass)}
+                      aria-pressed={showPass}
+                      aria-label={showPass ? "Hide password" : "Show password"}
+                      title={showPass ? "Hide password" : "Show password"}
+                      className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-600 hover:text-slate-900 flex items-center cursor-pointer"
+                    >
+                      {showPass ? (
+                      /* eye-off (official-like) */
+                      <svg xmlns="http://www.w3.org/2000/svg" className="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                        <path d="M3 3l18 18"></path>
+                        <path d="M10.47 10.47A3 3 0 0113.53 13.53"></path>
+                        <path d="M9.88 5.06C11.07 5 12.34 5.25 13.53 5.72"></path>
+                        <path d="M2.46 12.01C3.73 7.95 7.52 5 12 5c1.2 0 2.36.2 3.44.57"></path>
+                        <path d="M21.54 12.01C20.27 16.07 16.48 19 12 19c-1.2 0-2.36-.2-3.44-.57"></path>
+                      </svg>
+                      ) : (
+                      /* eye (official-like) */
+                      <svg xmlns="http://www.w3.org/2000/svg" className="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                        <path d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                        <path d="M2.46 12C3.73 7.95 7.52 5 12 5c4.48 0 8.27 2.95 9.54 7-1.27 4.05-5.06 7-9.54 7-4.48 0-8.27-2.95-9.54-7z"></path>
+                      </svg>
+                      )}
+                    </button>
+                    )}
+                  </div>
+                  {passError && <p className="text-red-600 text-xs mt-1 font-medium">{passError}</p>}
+
+                  {/* FORGOT */}
+                        <div className="text-right mt-2 mb-6">
+                          <Link to="/forgot" className="text-sky-600 hover:text-sky-700 hover:underline text-xs font-medium">
+                          Forgot Password?
+                          </Link>
+                        </div>
+
+                        {/* LOGIN BUTTON */}
+              <button
+                ref={loginButtonRef}
+                onClick={handleLogin}
+                disabled={!isValid || loading}
+                className={`
+                  w-full py-3 text-base font-semibold rounded-xl flex items-center justify-center gap-2 transition-all duration-200
+                  ${isValid && !loading
+                    ? "bg-sky-500 hover:bg-sky-600 text-white shadow-md hover:shadow-lg"
+                    : "bg-sky-100 opacity-60 cursor-not-allowed text-slate-400"}
+                `}
+              >
+                {loading ? (
+                  <div className="w-6 h-6 mx-auto border-4 border-white border-t-transparent rounded-full animate-spin"></div>
+                ) : (
+                  "Login"
+                )}
+              </button>
+
+              {/* OR */}
+              <div className="flex items-center gap-3 my-6">
+                <div className="h-[1px] bg-sky-200 flex-1"></div>
+                <p className="text-slate-500 text-xs font-medium">OR CONTINUE WITH</p>
+                <div className="h-[1px] bg-sky-200 flex-1"></div>
+              </div>
+
+              {/* GOOGLE */}
+             <button
+              onClick={handleGoogleLogin}
+              className="w-full flex items-center justify-center gap-2 bg-white border-2 border-sky-200 py-3 rounded-xl hover:bg-sky-50 hover:border-sky-300 transition-all duration-200"
+             >
+            <img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg" className="w-5" />
+            <span className="text-slate-700 text-sm font-medium">Continue with Google</span>
+            </button>
             </div>
 
-            {/* GOOGLE */}
-           <button
-            onClick={handleGoogleLogin}
-            className="w-full flex items-center justify-center gap-2 bg-[#2C3143] py-3 rounded-xl"
-           >
-          <img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg" className="w-5" />
-          <span className="text-gray-200 text-sm">Continue with Google</span>
-          </button>
-
-
-            {/* SIGNUP LINK */}
-            <p className="text-center text-sm mt-6 text-gray-300">
-              Don’t have an account?
-              <Link to="/signup" className="text-blue-400 ml-1">Sign Up</Link>
+            {/* SIGNUP LINK (removed top border and added gap) */}
+            <p className="text-center text-xs text-slate-700 mt-8">
+              Don't have an account?<Link to="/signup" className="text-sky-600 hover:text-sky-700 font-semibold ml-1">Sign Up</Link>
             </p>
 
           </div>

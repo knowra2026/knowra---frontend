@@ -1,7 +1,7 @@
 import { useState, useRef, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import logomark from "../assets/logo.png";
-import logoname from "../assets/Logoname.png";
+import logoname from "../assets/logoname-b.png";
 import { signInWithPopup } from "firebase/auth";
 import { googleProvider } from "../firebase";
 
@@ -28,6 +28,14 @@ export default function Signup() {
   const [gUsername, setGUsername] = useState("");
   const [gMobile, setGMobile] = useState("");
 
+  // REFS FOR FORM FIELDS
+  const nameInputRef = useRef(null);
+  const usernameInputRef = useRef(null);
+  const mobileInputRef = useRef(null);
+  const emailInputRef = useRef(null);
+  const passwordInputRef = useRef(null);
+  const signupButtonRef = useRef(null);
+
   // LIVE VALIDATION STATES
   const [emailUsed, setEmailUsed] = useState(false);
   const [usernameUsed, setUsernameUsed] = useState(false);
@@ -49,6 +57,42 @@ export default function Signup() {
     !emailUsed &&
     !usernameUsed &&
     !mobileUsed;
+
+  // Handle Enter key to navigate between fields
+  const handleNameKeyDown = (e) => {
+    if (e.key === "Enter") {
+      e.preventDefault();
+      usernameInputRef.current?.focus();
+    }
+  };
+
+  const handleUsernameKeyDown = (e) => {
+    if (e.key === "Enter") {
+      e.preventDefault();
+      mobileInputRef.current?.focus();
+    }
+  };
+
+  const handleMobileKeyDown = (e) => {
+    if (e.key === "Enter") {
+      e.preventDefault();
+      emailInputRef.current?.focus();
+    }
+  };
+
+  const handleEmailKeyDown = (e) => {
+    if (e.key === "Enter") {
+      e.preventDefault();
+      passwordInputRef.current?.focus();
+    }
+  };
+
+  const handlePasswordKeyDown = (e) => {
+    if (e.key === "Enter") {
+      e.preventDefault();
+      signupButtonRef.current?.click();
+    }
+  };
 
 // ---------------------------------------------
 // 🔥 GOOGLE USERNAME LIVE CHECK
@@ -252,41 +296,42 @@ async function handleGoogleComplete() {
         </div>
       )}
 {googleUser && (
-  <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-    <div className="bg-[#222738] p-6 rounded-xl w-[350px] text-white shadow-lg relative">
+  <div className="fixed inset-0 bg-black bg-opacity-40 flex items-center justify-center z-50">
+    <div className="bg-white p-8 rounded-2xl w-[350px] text-black shadow-2xl relative">
 
       {/* CLOSE BUTTON */}
       <button
         onClick={() => setGoogleUser(null)}
-        className="absolute top-3 right-3 text-gray-300 hover:text-white text-xl"
+        className="absolute top-4 right-4 text-slate-400 hover:text-slate-700 text-xl font-bold"
       >
         ✕
       </button>
 
-      <h2 className="text-xl font-semibold mb-4 text-center">Complete Profile</h2>
+      <h2 className="text-2xl font-bold mb-2 text-center text-black">Complete Profile</h2>
+      <p className="text-center text-slate-600 text-sm mb-6">Add a few details to finish signing up</p>
 
       {/* USERNAME */}
-      <label className="text-sm">Username</label>
+      <label className="text-sm font-semibold text-black block mb-2">Username</label>
       <input
         type="text"
-        className="w-full p-3 bg-[#2C3143] rounded-xl mt-1 mb-1"
+        className="w-full p-3 bg-white rounded-lg mt-0 mb-2 text-black outline-none border-2 border-sky-200 focus:border-sky-500 placeholder-gray-400"
         value={gUsername}
         onChange={(e) => setGUsername(e.target.value)}
         placeholder="Create username"
       />
-      {usernameUsed && <p className="text-red-400 text-xs mb-2">Username already taken</p>}
+      {usernameUsed && <p className="text-red-600 text-xs mt-1 font-medium">Username already taken</p>}
 
       {/* MOBILE */}
-      <label className="text-sm">Mobile Number</label>
+      <label className="text-sm font-semibold text-black block mb-2 mt-4">Mobile Number</label>
       <input
         type="tel"
         maxLength="10"
-        className="w-full p-3 bg-[#2C3143] rounded-xl mt-1 mb-1"
+        className="w-full p-3 bg-white rounded-lg mt-0 mb-2 text-black outline-none border-2 border-sky-200 focus:border-sky-500 placeholder-gray-400"
         value={gMobile}
         onChange={(e) => setGMobile(e.target.value.replace(/\D/g, ""))}
         placeholder="Enter mobile number"
       />
-      {mobileUsed && <p className="text-red-400 text-xs mb-2">Mobile already registered</p>}
+      {mobileUsed && <p className="text-red-600 text-xs mt-1 font-medium">Mobile already registered</p>}
 
       {/* CONTINUE BUTTON */}
       <button
@@ -297,14 +342,14 @@ async function handleGoogleComplete() {
           usernameUsed ||
           mobileUsed
         }
-        className={`w-full py-3 rounded-xl font-semibold mt-3
+        className={`w-full py-3 rounded-lg font-semibold mt-6 transition-all duration-200
           ${
             gUsername.trim().length >= 3 &&
             gMobile.length === 10 &&
             !usernameUsed &&
             !mobileUsed
-              ? "bg-blue-500 hover:bg-blue-600"
-              : "bg-[#3a3f52] opacity-40 cursor-not-allowed"
+              ? "bg-sky-500 hover:bg-sky-600 text-white shadow-md"
+              : "bg-sky-100 opacity-60 cursor-not-allowed text-slate-400"
           }
         `}
       >
@@ -319,45 +364,48 @@ async function handleGoogleComplete() {
       
 
       <div
-        className="min-h-screen flex items-center justify-center"
-        style={{ background: "linear-gradient(145deg,#25293C 0%,#646FA2 100%)" }}
+        className="min-h-screen flex items-center justify-center bg-white"
       >
 
         {/* MAIN CONTAINER */}
         <div
           className="
-            flex w-[1300px] h-[780px] rounded-2xl shadow-2xl overflow-hidden
-            bg-[#222738]
-            max-md:flex-col max-md:w-[92%] max-md:h-auto max-md:py-8 max-md:rounded-xl
+            flex w-[1300px] rounded-3xl shadow-2xl overflow-hidden
+            bg-white
+            max-md:flex-col max-md:w-[92%] max-md:h-auto max-md:py-8 max-md:rounded-2xl
           "
         >
 
           {/* LEFT SECTION */}
           <div className="
-                w-[48%] flex flex-col items-center justify-center gap-3 border-r border-gray-700/30
-                max-md:w-full max-md:border-none max-md:mb-6 max-md:mt-4
+                w-[48%] flex flex-col items-center justify-center gap-4 border-r border-sky-100
+                bg-gradient-to-br from-sky-50 to-white
+                max-md:w-full max-md:border-none max-md:mb-6 max-md:mt-4 max-md:py-8
                 ">
-            <img src={logomark} alt="Knowra logo mark" className="w-[230px] max-md:w-[110px] user-select-none pointer-events-none select-none" draggable="false" />
-            <img src={logoname} alt="Knowra logo name" className="w-[260px] max-md:w-[140px] user-select-none pointer-events-none select-none" draggable="false" />
+            <img src={logomark} alt="Knowra logo mark" className="w-[200px] max-md:w-[100px] user-select-none pointer-events-none select-none" draggable="false" />
+            <img src={logoname} alt="Knowra logo name" className="w-[240px] max-md:w-[130px] user-select-none pointer-events-none select-none" draggable="false" />
                            
-            <p className="text-center text-gray-300 text-[14px] w-[78%]">
+            <p className="text-center text-slate-700 text-sm w-[78%]">
               Learn smarter, grow faster — Knowra empowers engineering minds.
             </p>
           </div>
 
           {/* RIGHT FORM AREA */}
-                <div className="w-[54%] px-20 pb-10 text-white max-md:w-full max-md:px-6">
+                <div className="w-[54%] px-12 py-8 text-black max-md:w-full max-md:px-6 flex flex-col justify-between">
 
-                <h1 className="text-3xl font-bold text-center mt-10">Create Account</h1>
-                <p className="text-center text-gray-300 text-sm mb-10">Join us to start learning</p>
+                <div>
+                <h1 className="text-3xl font-bold text-center mb-1 text-black">Create Account</h1>
+                <p className="text-center text-sky-600 text-sm mb-8">Join us to start learning</p>
 
                 {/* NAME + USERNAME */}
                 <div className="flex gap-6 mb-6 max-md:flex-col max-md:gap-3">
                   <div className="w-1/2 max-md:w-full">
-                  <label className="text-xs font-semibold">Full Name</label>
+                  <label className="text-sm font-semibold text-black mb-2">Full Name</label>
                   <input
+                    ref={nameInputRef}
                     type="text"
-                    className="w-full bg-[#2C3143] p-3 rounded-xl mt-1 outline-none"
+                    onKeyDown={handleNameKeyDown}
+                    className="w-full bg-white p-3 rounded-lg mt-0 mb-2 text-black outline-none border-2 border-sky-200 focus:border-sky-500 placeholder-gray-400 transition-colors"
                     placeholder="Enter full name"
                     value={name}
                     onChange={(e) => setName(e.target.value)}
@@ -365,48 +413,55 @@ async function handleGoogleComplete() {
                   </div>
 
                   <div className="w-1/2 max-md:w-full">
-                  <label className="text-xs font-semibold">Username</label>
+                  <label className="text-sm font-semibold text-black mb-2">Username</label>
                   <input
+                    ref={usernameInputRef}
                     type="text"
-                    className="w-full bg-[#2C3143] p-3 rounded-xl mt-1 outline-none"
+                    onKeyDown={handleUsernameKeyDown}
+                    className="w-full bg-white p-3 rounded-lg mt-0 mb-2 text-black outline-none border-2 border-sky-200 focus:border-sky-500 placeholder-gray-400 transition-colors"
                     placeholder="Create username"
                     value={username}
                     onChange={(e) => setUsername(e.target.value)}
                   />
-                  {usernameUsed && <p className="text-red-400 text-xs mt-1">Username already taken</p>}
+                  {usernameUsed && <p className="text-red-600 text-xs mt-1 font-medium">Username already taken</p>}
                   </div>
                 </div>
 
                 {/* MOBILE */}
-            <label className="text-xs font-semibold">Mobile Number</label>
+            <label className="text-sm font-semibold text-black mb-2">Mobile Number</label>
             <input
+              ref={mobileInputRef}
               type="tel"
               maxLength={10}
-              className="w-full bg-[#2C3143] p-3 rounded-xl mt-1 outline-none"
-              placeholder="mobile number"
+              onKeyDown={handleMobileKeyDown}
+              className="w-full bg-white p-3 rounded-lg mt-0 mb-2 text-black outline-none border-2 border-sky-200 focus:border-sky-500 placeholder-gray-400 transition-colors"
+              placeholder="Mobile number"
               value={mobile}
               onChange={(e) => setMobile(e.target.value.replace(/\D/g, ""))}
             />
-            {mobileUsed && <p className="text-red-400 text-xs mt-1">Mobile already registered</p>}
+            {mobileUsed && <p className="text-red-600 text-xs mt-1 font-medium">Mobile already registered</p>}
 
             {/* EMAIL */}
-            <label className="text-xs font-semibold mt-4">Email </label>
+            <label className="text-sm font-semibold text-black mt-4 mb-2">Email</label>
             <input
+              ref={emailInputRef}
               type="email"
-              className="w-full bg-[#2C3143] p-3 rounded-xl mt-1 outline-none"
+              onKeyDown={handleEmailKeyDown}
+              className="w-full bg-white p-3 rounded-lg mt-0 mb-2 text-black outline-none border-2 border-sky-200 focus:border-sky-500 placeholder-gray-400 transition-colors"
               placeholder="Enter email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
             />
-            {emailUsed && <p className="text-red-400 text-xs mt-1">Email already in use</p>}
+            {emailUsed && <p className="text-red-600 text-xs mt-1 font-medium">Email already in use</p>}
 
             {/* PASSWORD */}
-                  <label className="text-xs font-semibold mt-4">Password</label>
-                  <div className="relative mb-8">
+                  <label className="text-sm font-semibold text-black mt-4 mb-2">Password</label>
+                  <div className="relative mb-6">
                     <input
-                    ref={passRef}
+                    ref={passwordInputRef}
                     type={showPass ? "text" : "password"}
-                    className="w-full bg-[#2C3143] p-3 pr-12 rounded-xl mt-1 outline-none"
+                    onKeyDown={handlePasswordKeyDown}
+                    className="w-full bg-white p-3 pr-12 rounded-lg mt-0 mb-2 text-black outline-none border-2 border-sky-200 focus:border-sky-500 placeholder-gray-400 transition-colors"
                     placeholder="Create password"
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
@@ -418,7 +473,7 @@ async function handleGoogleComplete() {
                     aria-pressed={showPass}
                     aria-label={showPass ? "Hide password" : "Show password"}
                     title={showPass ? "Hide password" : "Show password"}
-                    className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-300 flex items-center"
+                    className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-600 hover:text-slate-900 flex items-center cursor-pointer"
                     >
                     {showPass ? (
                       /* eye-off (official-like) */
@@ -441,11 +496,12 @@ async function handleGoogleComplete() {
 
                   {/* SIGN UP BUTTON */}
             <button
+              ref={signupButtonRef}
               onClick={handleSignup}
               disabled={!isValid || loading}
               className={`
-                w-full py-3 text-lg font-semibold rounded-xl transition-all
-                ${isValid ? "bg-blue-500 hover:bg-blue-600" : "bg-[#3a3f52] opacity-40"}
+                w-full py-3 text-base font-semibold rounded-xl transition-all duration-200 flex items-center justify-center gap-2
+                ${isValid && !loading ? "bg-sky-500 hover:bg-sky-600 text-white shadow-md hover:shadow-lg" : "bg-sky-100 opacity-60 cursor-not-allowed text-slate-400"}
               `}
             >
               {loading ? (
@@ -457,25 +513,25 @@ async function handleGoogleComplete() {
 
             {/* OR */}
             <div className="flex items-center gap-3 my-6">
-              <div className="flex-1 h-[1px] bg-gray-600"></div>
-              <p className="text-xs text-gray-400">OR CONTINUE WITH</p>
-              <div className="flex-1 h-[1px] bg-gray-600"></div>
+              <div className="flex-1 h-[1px] bg-sky-200"></div>
+              <p className="text-xs text-slate-500 font-medium">OR CONTINUE WITH</p>
+              <div className="flex-1 h-[1px] bg-sky-200"></div>
             </div>
 
             {/* GOOGLE */}
             <button
             onClick={handleGoogleLogin}
-            className="w-full flex items-center justify-center gap-2 bg-[#2C3143] py-3 rounded-xl"
+            className="w-full flex items-center justify-center gap-2 bg-white border-2 border-sky-200 py-3 rounded-xl hover:bg-sky-50 hover:border-sky-300 transition-all duration-200"
             >
             <img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg" className="w-5" />
-           <span className="text-gray-200 text-sm">Continue with Google</span>
+           <span className="text-slate-700 text-sm font-medium">Continue with Google</span>
            </button>
-
+           </div>
 
             {/* LOGIN REDIRECT */}
-            <p className="text-center text-sm mt-4 text-gray-300">
+            <p className="text-center text-xs text-slate-700 mt-8">
               Already have an account?
-              <Link to="/login" className="text-blue-400 ml-1">Sign In</Link>
+              <Link to="/login" className="text-sky-600 hover:text-sky-700 font-semibold ml-1">Sign In</Link>
             </p>
 
           </div>
