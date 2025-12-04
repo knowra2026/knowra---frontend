@@ -5,6 +5,8 @@ import Forgot from "./pages/Forgot";
 import Index from "./pages/Index";
 import Profile from "./pages/Profile";
 import Academics from "./pages/Academics";
+import Subject from "./pages/Subject";
+import Playlist from "./pages/Playlist";
 import SkillCourses from "./pages/SkillCourses";
 import GuruAI from "./pages/GuruAI";
 import NotFound from "./pages/NotFound";
@@ -24,6 +26,8 @@ export default function App() {
       <Route path="/forgot" element={<Forgot />} />
       <Route path="/profile" element={<Profile />} />
       <Route path="/academics" element={<Academics />} />
+      <Route path="/academics/subject/:subjectId" element={<Subject />} />
+      <Route path="/playlist/:subjectId/:unitNumber" element={<Playlist />} />
       <Route path="/skill-courses" element={<SkillCourses />} />
       <Route path="/guru-ai" element={<GuruAI />} />
       <Route path="/about" element={<About />} />
