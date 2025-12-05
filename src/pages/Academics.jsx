@@ -320,13 +320,7 @@ const parseDriveUrl = (url) => {
       "CSE",
       "CSE (Artificial Intelligence and Data Science)",
       "CSE (Data Science)",
-
-              <span className="block truncate">{clg}</span>
-            </div>
-          ))}
-        </div>
-      </div>
-    );
+    ],
   };
 
   return (
