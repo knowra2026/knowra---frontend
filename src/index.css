@@ -7,9 +7,14 @@
 /* On small screens add bottom padding equal to the bottom nav height + safe-area inset.
 	 This keeps the floating nav from covering content without inserting a visible spacer element. */
 @media (max-width: 768px) {
+	/* Reserve space for mobile top and bottom floating navs and device safe areas */
 	body {
-		padding-bottom: calc(64px + env(safe-area-inset-bottom));
+		padding-top: calc(56px + env(safe-area-inset-top));
+		padding-bottom: calc(72px + env(safe-area-inset-bottom));
+		/* ensure background extends under nav but interactive content doesn't get covered */
+		box-sizing: border-box;
 	}
+
 	/* if any leftover spacer divs exist, hide them to avoid double spacing */
 	.nav-bottom-spacer { display: none !important; }
 }

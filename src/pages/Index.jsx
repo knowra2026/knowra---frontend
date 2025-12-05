@@ -17,41 +17,44 @@ const Index = () => {
       <Navigation />
       
       {/* Hero Section */}
-      <section
-        className="pt-6 md:pt-28 pb-12 px-4 relative overflow-hidden"
-        style={{
-          backgroundImage: `url(${heroBg})`,
-          backgroundSize: 'cover',
-          backgroundPosition: 'center',
-        }}
-      >
-        <div className="absolute inset-0 bg-background/80 backdrop-blur-sm" />
-        <div className="container mx-auto max-w-5xl text-center relative z-10">
-          <h1 className="text-3xl sm:text-4xl md:text-6xl font-bold mb-4 sm:mb-6 leading-tight">
-            Learn Smart. <span className="text-sky-500">Score High.</span> Grow Faster.
-          </h1>
-          <p className="text-base sm:text-lg md:text-xl text-muted-foreground mb-8 max-w-3xl mx-auto leading-relaxed">
-            Your complete e-learning platform for engineering success. Access academics,
-            skill courses, and AI-powered doubt solving.
-          </p>
-          {!user ? (
-            <Button variant="hero" size="lg" onClick={() => navigate("/academics")}>
-              Get Started
+        <section
+          className="pt-14 md:pt-28 pb-12 px-4 relative overflow-hidden"
+          style={{
+            backgroundImage: `url(${heroBg})`,
+            backgroundSize: 'cover',
+            backgroundPosition: 'center',
+          }}
+        >
+          {/* On mobile leave space at the top so the nav stays on a white background.
+          The overlay starts below the nav on small screens (top-14) and covers full
+          area on md+ (md:inset-0). */}
+          <div className="absolute left-0 right-0 top-14 bottom-0 md:inset-0 bg-background/80 backdrop-blur-sm" />
+          <div className="container mx-auto max-w-5xl text-center relative z-10">
+            <h1 className="text-3xl sm:text-4xl md:text-6xl font-bold mb-4 sm:mb-6 leading-tight">
+          Learn Smart. <span className="text-sky-500">Score High.</span> Grow Faster.
+            </h1>
+            <p className="text-base sm:text-lg md:text-xl text-muted-foreground mb-8 max-w-3xl mx-auto leading-relaxed">
+          Your complete e-learning platform for engineering success. Access academics,
+          skill courses, and AI-powered doubt solving.
+            </p>
+            {!user ? (
+          <Button variant="hero" size="lg" onClick={() => navigate("/academics")}>
+            Get Started
+          </Button>
+            ) : (
+          <div className="flex justify-center">
+            <Button variant="hero" size="lg" onClick={() => navigate('/academics')}>
+              Explore Academics
             </Button>
-          ) : (
-            <div className="flex justify-center">
-              <Button variant="hero" size="lg" onClick={() => navigate('/academics')}>
-                Explore Academics
-              </Button>
-              <Button className="ml-4" onClick={() => navigate('/profile')}>
-                My Profile
-              </Button>
-            </div>
-          )}
-        </div>
-      </section>
+            <Button className="ml-4" onClick={() => navigate('/profile')}>
+              My Profile
+            </Button>
+          </div>
+            )}
+          </div>
+        </section>
 
-      {/* Main Features Section */}
+        {/* Main Features Section */}
         <section className="py-12 px-4 sm:px-6 bg-accent/30">
           <div className="container mx-auto max-w-7xl">
             {/* Desktop / tablet layout (3 columns) */}

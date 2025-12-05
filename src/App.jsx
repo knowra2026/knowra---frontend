@@ -1,4 +1,6 @@
 import { Routes, Route } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { LoadingScreen } from "./components/LoadingScreen";
 import Login from "./pages/Login";
 import Signup from "./pages/Signup";
 import Forgot from "./pages/Forgot";
@@ -17,24 +19,36 @@ import Policy from "./pages/Policy";
 
 
 export default function App() {
+  const [isInitialLoading, setIsInitialLoading] = useState(true);
+
+  // Show loading screen for 1.5 seconds on initial app load
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setIsInitialLoading(false);
+    }, 1500);
+    return () => clearTimeout(timer);
+  }, []);
   return (
-    <Routes>
-      <Route path="/" element={<Index />} />
-      <Route path="/home" element={<Index />} />
-      <Route path="/login" element={<Login />} />
-      <Route path="/signup" element={<Signup />} />
-      <Route path="/forgot" element={<Forgot />} />
-      <Route path="/profile" element={<Profile />} />
-      <Route path="/academics" element={<Academics />} />
-      <Route path="/academics/subject/:subjectId" element={<Subject />} />
-      <Route path="/playlist/:subjectId/:unitNumber" element={<Playlist />} />
-      <Route path="/skill-courses" element={<SkillCourses />} />
-      <Route path="/guru-ai" element={<GuruAI />} />
-      <Route path="/about" element={<About />} />
-      <Route path="/settings" element={<Settings />} />
-      <Route path="/privacy" element={<Privacy />} />
-      <Route path="/policy" element={<Policy />} />
-      <Route path="*" element={<NotFound />} />
-    </Routes>
+    <>
+      <LoadingScreen isLoading={isInitialLoading} />
+      <Routes>
+        <Route path="/" element={<Index />} />
+        <Route path="/home" element={<Index />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/signup" element={<Signup />} />
+        <Route path="/forgot" element={<Forgot />} />
+        <Route path="/profile" element={<Profile />} />
+        <Route path="/academics" element={<Academics />} />
+        <Route path="/academics/subject/:subjectId" element={<Subject />} />
+        <Route path="/playlist/:subjectId/:unitNumber" element={<Playlist />} />
+        <Route path="/skill-courses" element={<SkillCourses />} />
+        <Route path="/guru-ai" element={<GuruAI />} />
+        <Route path="/about" element={<About />} />
+        <Route path="/settings" element={<Settings />} />
+        <Route path="/privacy" element={<Privacy />} />
+        <Route path="/policy" element={<Policy />} />
+        <Route path="*" element={<NotFound />} />
+      </Routes>
+    </>
   );
 }

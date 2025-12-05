@@ -4,11 +4,13 @@ import logoname from "@/assets/logoname-b.png";
 import { Home, BookOpen, GraduationCap, Bot, User, Menu, X, Info, Settings, ShieldCheck, FileText } from "lucide-react";
 import { useState } from "react";
 import { useAuth } from "@/context/AuthContext";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 
 export const Navigation = () => {
   const { user, signOutUser } = useAuth();
   const navigate = useNavigate();
+  const location = useLocation();
+  const isHome = location.pathname === "/";
   const [mobileOpen, setMobileOpen] = useState(false);
   // always use the rounded floating header style across pages
   return (
@@ -82,7 +84,16 @@ export const Navigation = () => {
       </nav>
 
       {/* Mobile Top Header (small screens) */}
-      <nav className="md:hidden fixed top-3 left-4 right-4 z-50 bg-white/95 backdrop-blur-md rounded-xl border border-border/20 shadow-lg">
+      <nav
+        className="md:hidden fixed z-50 bg-white rounded-xl border border-border/20 shadow-lg"
+        style={{
+          top: 'calc(12px + env(safe-area-inset-top))',
+          left: isHome ? '50%' : '16px',
+          right: isHome ? 'auto' : '16px',
+          transform: isHome ? 'translateX(-50%)' : 'none',
+          width: isHome ? 'min(92%,520px)' : undefined
+        }}
+      >
         <div className="container mx-auto px-3 py-1 flex items-center justify-between">
             <NavLink to="/" className="flex items-center gap-2">
             <img src={logo} alt="Knowra mark" draggable={false} onDragStart={(e)=>e.preventDefault()} className="h-8 w-8 object-contain select-none" />
@@ -125,64 +136,81 @@ export const Navigation = () => {
 
         {/* spacer removed so hero background shows under the fixed header on mobile */}
 
-      {/* Mobile Navigation - Fixed Bottom (use safe-area inset; slightly slimmer) */}
+      {/* Mobile Navigation - Fixed Bottom (Instagram-style) */}
       <nav
         className="md:hidden fixed left-4 right-4 z-50 bg-white/95 backdrop-blur-md rounded-2xl border border-border/20 shadow-xl"
         style={{ bottom: 'calc(12px + env(safe-area-inset-bottom))' }}
       >
-        <div className="flex items-center justify-around py-1 px-2">
+        <div className="flex items-center justify-around py-2 px-2">
           <NavLink 
             to="/" 
-            className="flex flex-col items-center gap-1 text-muted-foreground transition-colors px-3 py-2 rounded-lg hover:bg-muted/40"
-            activeClassName="text-primary bg-primary/10 ring-1 ring-primary/20"
+            className="flex flex-col items-center gap-1 text-gray-600 transition-all px-3 py-2 rounded-lg hover:bg-gray-50 relative group"
+            activeClassName="text-sky-600"
           >
-            <Home className="h-6 w-6" />
-            <span className="text-xs">Home</span>
+            <div className="relative">
+              <Home className="h-6 w-6" />
+              <div className="absolute bottom-0 left-0 right-0 h-1 bg-sky-600 rounded-full scale-0 group-[.active]:scale-100 transition-transform"></div>
+            </div>
+            <span className="text-xs font-medium">Home</span>
           </NavLink>
           <NavLink 
             to="/academics" 
-            className="flex flex-col items-center gap-1 text-muted-foreground transition-colors px-3 py-2 rounded-lg hover:bg-muted/40"
-            activeClassName="text-primary bg-primary/10 ring-1 ring-primary/20"
+            className="flex flex-col items-center gap-1 text-gray-600 transition-all px-3 py-2 rounded-lg hover:bg-gray-50 relative group"
+            activeClassName="text-sky-600"
           >
-            <BookOpen className="h-6 w-6" />
-            <span className="text-xs">Academics</span>
+            <div className="relative">
+              <BookOpen className="h-6 w-6" />
+              <div className="absolute bottom-0 left-0 right-0 h-1 bg-sky-600 rounded-full scale-0 group-[.active]:scale-100 transition-transform"></div>
+            </div>
+            <span className="text-xs font-medium">Academics</span>
           </NavLink>
           <NavLink 
             to="/skill-courses" 
-            className="flex flex-col items-center gap-1 text-muted-foreground transition-colors px-3 py-2 rounded-lg hover:bg-muted/40"
-            activeClassName="text-primary bg-primary/10 ring-1 ring-primary/20"
+            className="flex flex-col items-center gap-1 text-gray-600 transition-all px-3 py-2 rounded-lg hover:bg-gray-50 relative group"
+            activeClassName="text-sky-600"
           >
-            <GraduationCap className="h-6 w-6" />
-            <span className="text-xs">Courses</span>
+            <div className="relative">
+              <GraduationCap className="h-6 w-6" />
+              <div className="absolute bottom-0 left-0 right-0 h-1 bg-sky-600 rounded-full scale-0 group-[.active]:scale-100 transition-transform"></div>
+            </div>
+            <span className="text-xs font-medium">Courses</span>
           </NavLink>
           <NavLink 
             to="/guru-ai" 
-            className="flex flex-col items-center gap-1 text-muted-foreground transition-colors px-3 py-2 rounded-lg hover:bg-muted/40"
-            activeClassName="text-primary bg-primary/10 ring-1 ring-primary/20"
+            className="flex flex-col items-center gap-1 text-gray-600 transition-all px-3 py-2 rounded-lg hover:bg-gray-50 relative group"
+            activeClassName="text-sky-600"
           >
-            <Bot className="h-6 w-6" />
-            <span className="text-xs">Guru.AI</span>
+            <div className="relative">
+              <Bot className="h-6 w-6" />
+              <div className="absolute bottom-0 left-0 right-0 h-1 bg-sky-600 rounded-full scale-0 group-[.active]:scale-100 transition-transform"></div>
+            </div>
+            <span className="text-xs font-medium">Guru.AI</span>
           </NavLink>
           {user ? (
             <NavLink 
               to="/profile" 
-              className="flex flex-col items-center gap-1 text-muted-foreground transition-colors px-3 py-2 rounded-lg hover:bg-muted/40"
-              activeClassName="text-sky-500"
+              className="flex flex-col items-center gap-1 text-gray-600 transition-all px-3 py-2 rounded-lg hover:bg-gray-50 relative group"
+              activeClassName="text-sky-600"
             >
-              <User className="h-6 w-6" />
-              <span className="text-xs">Profile</span>
+              <div className="relative">
+                <User className="h-6 w-6" />
+                <div className="absolute bottom-0 left-0 right-0 h-1 bg-sky-600 rounded-full scale-0 group-[.active]:scale-100 transition-transform"></div>
+              </div>
+              <span className="text-xs font-medium">Profile</span>
             </NavLink>
             ) : (
             <NavLink 
               to="/login" 
-              className="flex flex-col items-center gap-1 text-muted-foreground transition-colors px-3 py-2 rounded-lg hover:bg-muted/40"
-              activeClassName="text-primary bg-primary/10 ring-1 ring-primary/20"
+              className="flex flex-col items-center gap-1 text-gray-600 transition-all px-3 py-2 rounded-lg hover:bg-gray-50 relative group"
+              activeClassName="text-sky-600"
             >
-              <User className="h-6 w-6" />
-              <span className="text-xs">Login</span>
+              <div className="relative">
+                <User className="h-6 w-6" />
+                <div className="absolute bottom-0 left-0 right-0 h-1 bg-sky-600 rounded-full scale-0 group-[.active]:scale-100 transition-transform"></div>
+              </div>
+              <span className="text-xs font-medium">Login</span>
             </NavLink>
             )}
-          {/* small gap to keep it visually balanced */}
         </div>
       </nav>
 

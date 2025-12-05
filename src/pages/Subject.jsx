@@ -40,6 +40,13 @@ const Subject = () => {
   const [pdfLoading, setPdfLoading] = useState(false);
 
   // ------------------------------------
+  // SCROLL TO TOP ON PAGE LOAD
+  // ------------------------------------
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [subjectId]);
+
+  // ------------------------------------
   // MAIN LOADING LOGIC
   // ------------------------------------
   useEffect(() => {

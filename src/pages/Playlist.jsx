@@ -39,6 +39,11 @@ const Playlist = () => {
   const [notesPreviewUrl, setNotesPreviewUrl] = useState("");
   const [notesContent, setNotesContent] = useState("");
 
+  // Scroll to top when playlist loads
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [subjectId, unitNumber]);
+
   useEffect(() => {
     const loadAll = async () => {
       setLoading(true);
@@ -244,10 +249,10 @@ const Playlist = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-blue-50 to-background pb-10">
+    <div className="min-h-screen bg-gradient-to-b from-blue-50 to-background pb-20 md:pb-10">
       <Navigation />
 
-      <main className="container mx-auto px-4 md:px-6 pt-6 md:pt-20">
+      <main className="container mx-auto px-4 md:px-6 pt-6 md:pt-20 pb-20 md:pb-0">
         <div className="max-w-7xl mx-auto">
 
           {/* Back Button */}
@@ -285,7 +290,7 @@ const Playlist = () => {
                   <h3 className="text-base font-semibold">Unit {unit.unit}: {unit.title}</h3>
                 </div>
 
-                <div className="p-3 overflow-y-auto" style={{ maxHeight: 'calc(100vh - 240px)' }}>
+                <div className="p-3 overflow-y-auto md:pb-3 pb-32" style={{ maxHeight: 'calc(100vh - 240px)' }}>
                   <nav className="space-y-2">
                     {topics.map((t, index) => {
                       const active = index === currentTopicIndex;
@@ -320,7 +325,7 @@ const Playlist = () => {
                     {unit.pdf && (
                       <button
                         onClick={openPdfModal}
-                        className="w-full text-center px-3 py-2 bg-gray-100 rounded font-medium hover:bg-gray-200 transition"
+                        className="w-full text-center px-3 py-2 bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-600 hover:to-orange-600 text-white rounded-lg font-semibold shadow-md hover:shadow-lg transition"
                       >
                         TOTAL UNIT PDF NOTES
                       </button>
@@ -332,7 +337,7 @@ const Playlist = () => {
 
             {/* RIGHT MAIN: Topic title, large video, centered nav buttons */}
             <section className="order-1 lg:order-2">
-              <div className="bg-white rounded-lg border shadow-sm p-6">
+              <div className="bg-white rounded-lg border shadow-sm p-6 mb-20 md:mb-0">
                 <h2 className="text-lg font-semibold mb-4">{currentTopic?.title || 'Select a Topic'}</h2>
 
                 <div className="flex justify-center">
@@ -402,7 +407,7 @@ const Playlist = () => {
                       {unit.pdf && (
                         <button
                           onClick={openPdfModal}
-                          className="block text-center px-3 py-2 bg-gray-100 rounded font-medium hover:bg-gray-200 transition"
+                          className="block text-center px-3 py-2 bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-600 hover:to-orange-600 text-white rounded-lg font-semibold shadow-md hover:shadow-lg transition"
                         >
                           TOTAL UNIT PDF NOTES
                         </button>
