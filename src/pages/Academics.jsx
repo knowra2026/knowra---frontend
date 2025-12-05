@@ -634,28 +634,28 @@ const parseDriveUrl = (url) => {
                       </CardHeader>
                       <CardContent className="space-y-3">
                         <div className="flex items-center text-sm">
-                          <span className="flex items-center gap-2 text-muted-foreground">
-                            <FileText className="h-4 w-4" />
+                          <span className="flex items-center gap-3 text-muted-foreground">
+                            <FileText className="h-4 w-4 flex-shrink-0" />
                             Study Materials
                           </span>
                         </div>
                         <div className="flex items-center text-sm">
-                          <span className="flex items-center gap-2 text-muted-foreground">
-                            <Video className="h-4 w-4" />
+                          <span className="flex items-center gap-3 text-muted-foreground">
+                            <Video className="h-4 w-4 flex-shrink-0" />
                             Video Lectures
                           </span>
                         </div>
                         <div className="space-y-1">
                           <div className="flex items-center text-sm">
-                            <span className="flex items-center gap-2 text-muted-foreground">
-                              <Download className="h-4 w-4" />
+                            <span className="flex items-center gap-3 text-muted-foreground">
+                              <Download className="h-4 w-4 flex-shrink-0" />
                               Previous Papers
                             </span>
                           </div>
 
                           <div className="flex items-center text-sm">
-                            <span className="flex items-center gap-2 text-muted-foreground">
-                              <Star className="h-4 w-4 text-black" />
+                            <span className="flex items-center gap-3 text-muted-foreground">
+                              <Star className="h-4 w-4 flex-shrink-0 text-black" />
                               IMP Questions
                             </span>
                           </div>

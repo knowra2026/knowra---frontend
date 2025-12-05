@@ -54,9 +54,13 @@ const Subject = () => {
       setSubject(subjectFile);
 
       // Load all unit data from the pre-imported units map
+      // Prefer the title from the subject `units` array (unitInfo) so
+      // the displayed unit name matches the syllabus listing.
       const loadedUnits = subjectFile.units.map((unitInfo) => {
         const unitData = getUnit(subjectId, unitInfo.unit);
-        return unitData ? { ...unitInfo, ...unitData } : unitInfo;
+        // Merge: keep unitData (topics, pdf, etc.) but let unitInfo override
+        // fields like `title` so the subject-provided name shows.
+        return unitData ? { ...unitData, ...unitInfo } : unitInfo;
       });
 
       setUnitsData(loadedUnits);

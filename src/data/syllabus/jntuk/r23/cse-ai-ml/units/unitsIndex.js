@@ -37,7 +37,58 @@ import lacUnit3 from './linear-algebra-and-calculus/unit3.js';
 import lacUnit4 from './linear-algebra-and-calculus/unit4.js';
 import lacUnit5 from './linear-algebra-and-calculus/unit5.js';
 
-// Unit map by subject and unit number
+
+// Basic Civil & Mechanical Engineering (BCME) - For 1-1 and 1-2 (and additional units)
+import bcmeUnit1 from './basic-civil-and-mechanical-engineering/unit1.js';
+import bcmeUnit2 from './basic-civil-and-mechanical-engineering/unit2.js';
+import bcmeUnit3 from './basic-civil-and-mechanical-engineering/unit3.js';
+import bcmeUnit4 from './basic-civil-and-mechanical-engineering/unit4.js';
+import bcmeUnit5 from './basic-civil-and-mechanical-engineering/unit5.js';
+import bcmeUnit6 from './basic-civil-and-mechanical-engineering/unit6.js';
+// import bcmeUnit3, bcmeUnit4, ... as you add them for 2-1, 2-2, etc.
+
+// 1-2 specific subjects (communicative english, chemistry, diff eq, data structures)
+import ceUnit1 from './communicative-english/unit1.js';
+import ceUnit2 from './communicative-english/unit2.js';
+import ceUnit3 from './communicative-english/unit3.js';
+import ceUnit4 from './communicative-english/unit4.js';
+import ceUnit5 from './communicative-english/unit5.js';
+
+import ecUnit1 from './engineering-chemistry/unit1.js';
+import ecUnit2 from './engineering-chemistry/unit2.js';
+import ecUnit3 from './engineering-chemistry/unit3.js';
+import ecUnit4 from './engineering-chemistry/unit4.js';
+import ecUnit5 from './engineering-chemistry/unit5.js';
+
+import deUnit1 from './differential-equations-and-vector-calculus/unit1.js';
+import deUnit2 from './differential-equations-and-vector-calculus/unit2.js';
+import deUnit3 from './differential-equations-and-vector-calculus/unit3.js';
+import deUnit4 from './differential-equations-and-vector-calculus/unit4.js';
+import deUnit5 from './differential-equations-and-vector-calculus/unit5.js';
+
+import dsUnit1 from './data-structures/unit1.js';
+import dsUnit2 from './data-structures/unit2.js';
+import dsUnit3 from './data-structures/unit3.js';
+import dsUnit4 from './data-structures/unit4.js';
+import dsUnit5 from './data-structures/unit5.js';
+
+// List of all CSE sub-branch subject IDs - Share only 1-1 and 1-2
+const cseSubBranches = [
+  'cse',
+  'cse-ai',
+  'cse-ai-ml',
+  'cse-ai-ds',
+  'cse-ds',
+  'cse-cs',
+  'cse-iot',
+];
+
+// Build CSE sub-branch unit mapping - ONLY for 1-1 and 1-2
+const cseFirstYearUnits = {
+  1: bcmeUnit1,  // 1-1
+  2: bcmeUnit2,  // 1-2
+};
+
 export const unitsMap = {
   'engineering-graphics': {
     1: egUnit1,
@@ -75,6 +126,44 @@ export const unitsMap = {
     4: lacUnit4,
     5: lacUnit5,
   },
+  'communicative-english': {
+    1: ceUnit1,
+    2: ceUnit2,
+    3: ceUnit3,
+    4: ceUnit4,
+    5: ceUnit5,
+  },
+  'engineering-chemistry': {
+    1: ecUnit1,
+    2: ecUnit2,
+    3: ecUnit3,
+    4: ecUnit4,
+    5: ecUnit5,
+  },
+  'differential-equations-and-vector-calculus': {
+    1: deUnit1,
+    2: deUnit2,
+    3: deUnit3,
+    4: deUnit4,
+    5: deUnit5,
+  },
+  'data-structures': {
+    1: dsUnit1,
+    2: dsUnit2,
+    3: dsUnit3,
+    4: dsUnit4,
+    5: dsUnit5,
+  },
+  'basic-civil-and-mechanical-engineering': {
+    1: bcmeUnit1,
+    2: bcmeUnit2,
+    3: bcmeUnit3,
+    4: bcmeUnit4,
+    5: bcmeUnit5,
+    6: bcmeUnit6,
+  },
+  // Add all CSE sub-branches - ONLY share 1-1 and 1-2 subjects
+  ...Object.fromEntries(cseSubBranches.map(branch => [branch, cseFirstYearUnits])),
 };
 
 export const getUnit = (subjectId, unitNumber) => {

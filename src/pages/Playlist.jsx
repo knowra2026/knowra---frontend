@@ -293,14 +293,14 @@ const Playlist = () => {
                         <button
                           key={index}
                           onClick={() => { setIsLoadingVideo(true); setAutoplay(false); setCurrentTopicIndex(index); }}
-                          className={`w-full text-left px-3 h-12 overflow-hidden transition flex items-center gap-3 ${
+                          className={`w-full text-left px-3 py-2 min-h-[48px] transition flex items-start gap-3 ${
                             active
                               ? 'bg-sky-50 border-l-4 border-sky-500 rounded-md shadow-sm'
                               : 'hover:bg-gray-50 rounded-md'
                           }`}
                         >
-                          <span className={`w-7 h-7 flex items-center justify-center text-xs font-semibold rounded-full ${active ? 'bg-sky-600 text-white' : 'bg-gray-200 text-gray-700'}`}>{index + 1}</span>
-                          <span className="text-sm truncate block">{t.title}</span>
+                          <span className={`w-7 h-7 flex-shrink-0 mt-1 flex items-center justify-center text-xs font-semibold rounded-full ${active ? 'bg-sky-600 text-white' : 'bg-gray-200 text-gray-700'}`}>{index + 1}</span>
+                          <span className="text-sm block whitespace-normal">{t.title}</span>
                         </button>
                       );
                     })}
