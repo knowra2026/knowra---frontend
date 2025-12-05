@@ -1,27 +1,21 @@
 export default {
   unit: 5,
-  title: "Transistors and Amplifiers",
-  pdf: "https://drive.google.com/file/d/1beeeExample5/view?usp=sharing",
+  title: "Basic Electronic Circuits and Instrumentation",
+  pdf: "https://drive.google.com/file/d/1rEPB8S_WVOFI37JFEPqKaJvAcuUdPbDu/view?usp=sharing",
   topics: [
-    {
-      title: "BJT Fundamentals",
-      video: "https://www.youtube.com/watch?v=R4Gz4OgRAKE"
-    },
-    {
-      title: "BJT Characteristics",
-      video: "https://www.youtube.com/watch?v=iBZ7_pTHNPE"
-    },
-    {
-      title: "Amplifier Configurations",
-      video: "https://www.youtube.com/watch?v=jxvdF5vkxPY"
-    },
-    {
-      title: "FET and MOSFET",
-      video: "https://www.youtube.com/watch?v=d_8p2T-7LlA"
-    },
-    {
-      title: "Amplifier Analysis",
-      video: "https://www.youtube.com/watch?v=C-Jg8TdMOZg"
-    }
+    // Rectifiers & Power Supplies
+    { title: "Block Diagram of a DC Power Supply", video: "" },
+    { title: "Full-Wave Bridge Rectifier: Working", video: "" },
+    { title: "Capacitor Filter (No Analysis)", video: "" },
+    { title: "Simple Zener Voltage Regulator: Working", video: "" },
+
+    // Amplifiers
+    { title: "Public Address (PA) System: Block Diagram", video: "" },
+    { title: "Common Emitter (RC Coupled) Amplifier: Circuit Diagram", video: "" },
+    { title: "Common Emitter (RC Coupled) Amplifier: Working", video: "" },
+    { title: "Frequency Response of CE Amplifier", video: "" },
+
+    // Electronic Instrumentation
+    { title: "Electronic Instrumentation System: Block Diagram", video: "" }
   ]
 };

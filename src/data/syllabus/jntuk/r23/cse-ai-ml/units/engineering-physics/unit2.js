@@ -1,27 +1,24 @@
 export default {
   unit: 2,
-  title: "Optics",
-  pdf: "https://drive.google.com/file/d/1example2/view?usp=sharing",
+  title: "Crystallography and X-ray diffraction",
+  pdf: "https://drive.google.com/file/d/1iMcRllm02WpydrgpGEHbufA6OlPFLvzk/view?usp=sharing",
   topics: [
-    {
-      title: "Reflection and Refraction",
-      video: "https://www.youtube.com/watch?v=MsZ4-WcTX1w"
-    },
-    {
-      title: "Lenses and Optical Instruments",
-      video: "https://www.youtube.com/watch?v=g_L5vGG1Ves"
-    },
-    {
-      title: "Interference",
-      video: "https://www.youtube.com/watch?v=sPq8KPUn1bI"
-    },
-    {
-      title: "Diffraction",
-      video: "https://www.youtube.com/watch?v=YJ9Aq_qY5RI"
-    },
-    {
-      title: "Polarization",
-      video: "https://www.youtube.com/watch?v=L_R3Uf1G-cw"
-    }
+      // Crystallography
+    { title: "Space Lattice", video: "" },
+    { title: "Basis", video: "" },
+    { title: "Unit Cell and Lattice Parameters", video: "", },
+    { title: "Bravais Lattices", video: "" },
+    { title: "Crystal Systems (3D)", video: "" },
+    { title: "Coordination Number", video: "" },
+    { title: "Packing Fraction of SC, BCC & FCC", video: "" },
+    { title: "Miller Indices", video: "" },
+    { title: "Separation Between Successive (hkl) Planes", video: "" },
+
+    // X-ray Diffraction
+    { title: "Bragg's Law", video: "" },
+    { title: "X-ray Diffractometer", video: "" },
+    { title: "Crystal Structure Determination (Laue Method)", video: "" },
+    { title: "Crystal Structure Determination (Powder Method)", video: "" }
+    
   ]
 };

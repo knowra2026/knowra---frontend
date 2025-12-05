@@ -1,27 +1,24 @@
 export default {
   unit: 4,
-  title: "Electricity and Magnetism",
-  pdf: "https://drive.google.com/file/d/1example4/view?usp=sharing",
+  title: "Quantum Mechanics and Free Electron Theory",
+  pdf: "https://drive.google.com/file/d/1dfi9NbzsKvtA62joosYL8vSnTcA7De8s/view?usp=sharing",
   topics: [
-    {
-      title: "Electric Charge and Field",
-      video: "https://www.youtube.com/watch?v=kv8QzIslHso"
-    },
-    {
-      title: "Electrostatic Potential",
-      video: "https://www.youtube.com/watch?v=eFbHZcLV0eI"
-    },
-    {
-      title: "Capacitance",
-      video: "https://www.youtube.com/watch?v=s3z4eCgQX98"
-    },
-    {
-      title: "Magnetic Field",
-      video: "https://www.youtube.com/watch?v=VJyaCW_8ZKU"
-    },
-    {
-      title: "Electromagnetic Induction",
-      video: "https://www.youtube.com/watch?v=GsrzKqYvAkI"
-    }
+    // Quantum Mechanics
+    { title: "Dual Nature of Matter", video: "" },
+    { title: "Heisenberg’s Uncertainty Principle", video: "" },
+    { title: "Significance of Wave Function", video: "" },
+    { title: "Properties of Wave Function", video: "" },
+    { title: "Schrödinger’s Time-Independent Wave Equation", video: "" },
+    { title: "Schrödinger’s Time-Dependent Wave Equation", video: "" },
+    { title: "Particle in a One-Dimensional Infinite Potential Well", video: "" },
+
+    // Free Electron Theory
+    { title: "Classical Free Electron Theory (Qualitative)", video: "" },
+    { title: "Merits and Demerits of Classical Free Electron Theory", video: "" },
+    { title: "Quantum Free Electron Theory", video: "" },
+    { title: "Electrical Conductivity (Quantum Free Electron Theory)", video: "" },
+    { title: "Fermi–Dirac Distribution", video: "" },
+    { title: "Density of States", video: "" },
+    { title: "Fermi Energy", video: "" }
   ]
 };

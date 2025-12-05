@@ -1,27 +1,29 @@
 export default {
   unit: 5,
-  title: "Modern Physics",
-  pdf: "https://drive.google.com/file/d/1example5/view?usp=sharing",
+  title: "Semiconductors",
+  pdf: "https://drive.google.com/file/d/1CmSj2kTPHAD3xTJ-wKHiebqohQVkaGYq/view?usp=sharing",
   topics: [
-    {
-      title: "Atomic Structure",
-      video: "https://www.youtube.com/watch?v=TFn7OdRnXhE"
-    },
-    {
-      title: "Photoelectric Effect",
-      video: "https://www.youtube.com/watch?v=iagWHNJL3EA"
-    },
-    {
-      title: "X-rays and Spectroscopy",
-      video: "https://www.youtube.com/watch?v=j97H1-S6cD4"
-    },
-    {
-      title: "Radioactivity",
-      video: "https://www.youtube.com/watch?v=MkPPbW1Eg3k"
-    },
-    {
-      title: "Nuclear Physics",
-      video: "https://www.youtube.com/watch?v=2g_xUa4mVMc"
-    }
+    // Semiconductor Basics
+    { title: "Formation of Energy Bands", video: "" },
+    { title: "Classification of Crystalline Solids", video: "" },
+
+    // Intrinsic Semiconductors
+    { title: "Intrinsic Semiconductors – Density of Charge Carriers", video: "" },
+    { title: "Electrical Conductivity (Intrinsic Semiconductors)", video: "" },
+    { title: "Fermi Level in Intrinsic Semiconductors", video: "" },
+
+    // Extrinsic Semiconductors
+    { title: "Extrinsic Semiconductors – Density of Charge Carriers", video: "" },
+    { title: "Dependence of Fermi Energy on Carrier Concentration", video: "" },
+    { title: "Dependence of Fermi Energy on Temperature", video: "" },
+
+    // Currents in Semiconductors
+    { title: "Drift Current", video: "" },
+    { title: "Diffusion Current", video: "" },
+    { title: "Einstein’s Equation", video: "" },
+
+    // Hall Effect
+    { title: "Hall Effect", video: "" },
+    { title: "Applications of Hall Effect", video: "" }
   ]
 };

@@ -1,27 +1,19 @@
 export default {
   unit: 2,
-  title: "AC Circuits",
-  pdf: "https://drive.google.com/file/d/1beeeExample2/view?usp=sharing",
+  title: "Machines and Measuring Instruments",
+  pdf: "https://drive.google.com/file/d/1gtrodAc3idKZ-bluT_9LA5eB8d0-jFhS/view?usp=sharing",
   topics: [
-    {
-      title: "AC Fundamentals",
-      video: "https://www.youtube.com/watch?v=qVcvHSaKbKI"
-    },
-    {
-      title: "RMS and Average Values",
-      video: "https://www.youtube.com/watch?v=JnMvBpI8xfA"
-    },
-    {
-      title: "Phasor Diagrams",
-      video: "https://www.youtube.com/watch?v=XFrqYM6z1iE"
-    },
-    {
-      title: "AC Circuit Analysis",
-      video: "https://www.youtube.com/watch?v=5hCqgB8rScc"
-    },
-    {
-      title: "Power Factor and Resonance",
-      video: "https://www.youtube.com/watch?v=xXd-_2XhMyY"
-    }
+    // Electrical Machines
+    { title: "DC Motor: Construction, Principle and Operation", video: "" },
+    { title: "DC Generator: Construction, Principle and Operation", video: "" },
+    { title: "Single Phase Transformer: Construction, Principle and Operation", video: "" },
+    { title: "Three Phase Induction Motor: Construction, Principle and Operation", video: "" },
+    { title: "Alternator: Construction, Principle and Operation", video: "" },
+    { title: "Applications of Electrical Machines", video: "" },
+
+    // Measuring Instruments
+    { title: "PMMC Instrument: Construction and Working Principle", video: "" },
+    { title: "Moving Iron (MI) Instrument: Construction and Working Principle", video: "" },
+    { title: "Wheatstone Bridge: Construction and Working Principle", video: "" }
   ]
 };

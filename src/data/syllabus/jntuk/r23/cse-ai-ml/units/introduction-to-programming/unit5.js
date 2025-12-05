@@ -1,27 +1,21 @@
 export default {
   unit: 5,
-  title: "Pointers and Structures",
-  pdf: "https://drive.google.com/file/d/1itpExample5/view?usp=sharing",
+  title: "Functions & File Handling",
+  pdf: "https://drive.google.com/file/d/1D4xhVNm7WA1h7_Zta1gL7DopFfWTi7Q7/view?usp=sharing",
   topics: [
-    {
-      title: "Pointer Basics",
-      video: "https://www.youtube.com/watch?v=rVZGf-Yx7Zc"
-    },
-    {
-      title: "Pointer Operations",
-      video: "https://www.youtube.com/watch?v=f4KJR_R-q8s"
-    },
-    {
-      title: "Pointers and Arrays",
-      video: "https://www.youtube.com/watch?v=Rxvv9krINc8"
-    },
-    {
-      title: "Structure Declaration",
-      video: "https://www.youtube.com/watch?v=oJPIEMEp0u4"
-    },
-    {
-      title: "Arrays of Structures",
-      video: "https://www.youtube.com/watch?v=hUc-_rL3dWI"
-    }
+    // Functions
+    { title: "Introduction to Functions", video: "" },
+    { title: "Function Declaration", video: "" },
+    { title: "Function Definition", video: "" },
+    { title: "Function Call", video: "" },
+    { title: "Return Types", video: "" },
+    { title: "Function Arguments", video: "" },
+    { title: "Modifying Parameters using Pointers", video: "" },
+    { title: "Arrays as Function Parameters", video: "" },
+    { title: "Scope of Variables", video: "" },
+    { title: "Lifetime of Variables", video: "" },
+
+    // File Handling
+    { title: "Basics of File Handling", video: "" }
   ]
 };

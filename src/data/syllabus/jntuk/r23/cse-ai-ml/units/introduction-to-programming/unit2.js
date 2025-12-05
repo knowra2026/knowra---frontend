@@ -1,27 +1,23 @@
 export default {
   unit: 2,
   title: "Control Structures",
-  pdf: "https://drive.google.com/file/d/1itpExample2/view?usp=sharing",
+  pdf: "https://drive.google.com/file/d/1xL3TSF3noL-9WsEpofNTO7Rb3D08hAdu/view?usp=sharing",
   topics: [
-    {
-      title: "If-Else Statements",
-      video: "https://www.youtube.com/watch?v=D-mYv2addds"
-    },
-    {
-      title: "Switch Statements",
-      video: "https://www.youtube.com/watch?v=9sqIEMqDdSc"
-    },
-    {
-      title: "Loops: While and Do-While",
-      video: "https://www.youtube.com/watch?v=TSJbzqvhnAU"
-    },
-    {
-      title: "For Loops",
-      video: "https://www.youtube.com/watch?v=S4L20Dn8JdM"
-    },
-    {
-      title: "Nested Loops and Break-Continue",
-      video: "https://www.youtube.com/watch?v=s9fcI3HVyXE"
-    }
+    // Control Structures
+    { title: "Simple Sequential Programs", video: "" },
+
+    // Conditional Statements
+    { title: "if Statement", video: "" },
+    { title: "if-else Statement", video: "" },
+    { title: "switch Statement", video: "" },
+
+    // Loops
+    { title: "for Loop", video: "" },
+    { title: "while Loop", video: "" },
+    { title: "do-while Loop", video: "" },
+
+    // Jump Statements
+    { title: "break Statement", video: "" },
+    { title: "continue Statement", video: "" }
   ]
 };

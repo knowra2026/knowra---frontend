@@ -33,6 +33,11 @@ const Playlist = () => {
   const [showPdfModal, setShowPdfModal] = useState(false);
   const [pdfLoading, setPdfLoading] = useState(false);
   const [previewUrl, setPreviewUrl] = useState("");
+  // Notes modal / preview state
+  const [showNotesModal, setShowNotesModal] = useState(false);
+  const [notesLoading, setNotesLoading] = useState(false);
+  const [notesPreviewUrl, setNotesPreviewUrl] = useState("");
+  const [notesContent, setNotesContent] = useState("");
 
   useEffect(() => {
     const loadAll = async () => {
@@ -119,6 +124,77 @@ const Playlist = () => {
       }
     } catch (e) {}
     return null;
+  };
+
+  // Open notes modal or prepare notes preview
+  const openNotesModal = () => {
+    // Reset
+    setNotesLoading(true);
+    setNotesPreviewUrl("");
+    setNotesContent("");
+
+    try {
+      // Prefer topic-level pdf first
+      if (currentTopic?.pdf) {
+        if (/drive\.google\.com/.test(currentTopic.pdf)) {
+          const conv = parseDriveUrl(currentTopic.pdf);
+          if (conv) {
+            setNotesPreviewUrl(conv.embed);
+          }
+        } else if (/^https?:\/\//.test(currentTopic.pdf)) {
+          setNotesPreviewUrl(currentTopic.pdf);
+        }
+      }
+
+      // Then fallback to topic text notes
+      if (!currentTopic?.pdf && currentTopic?.notes) {
+        setNotesContent(currentTopic.notes);
+      }
+    } catch (e) {
+      console.error('Notes load failed', e);
+    }
+
+    // Simulate small load time for UX
+    setTimeout(() => {
+      setNotesLoading(false);
+      setShowNotesModal(true);
+    }, 200);
+  };
+
+  const downloadTopicNotes = () => {
+    try {
+      if (currentTopic?.pdf) {
+        if (/drive\.google\.com/.test(currentTopic.pdf)) {
+          const conv = parseDriveUrl(currentTopic.pdf);
+          if (conv) {
+            window.open(conv.download, '_blank');
+            return;
+          }
+        }
+        const a = document.createElement('a');
+        a.href = currentTopic.pdf;
+        a.download = `${currentTopic.title.replace(/\s+/g,'-')}-notes.pdf`;
+        document.body.appendChild(a);
+        a.click();
+        a.remove();
+        return;
+      }
+
+      // If only text notes available, create a blob for download
+      if (currentTopic?.notes) {
+        const blob = new Blob([currentTopic.notes], { type: 'text/plain' });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = `${currentTopic.title.replace(/\s+/g,'-')}-notes.txt`;
+        document.body.appendChild(a);
+        a.click();
+        a.remove();
+        URL.revokeObjectURL(url);
+      }
+    } catch (e) {
+      console.error('Download notes failed', e);
+    }
   };
 
   // Open PDF modal
@@ -217,14 +293,14 @@ const Playlist = () => {
                         <button
                           key={index}
                           onClick={() => { setIsLoadingVideo(true); setAutoplay(false); setCurrentTopicIndex(index); }}
-                          className={`w-full text-left px-3 py-2 transition flex items-center gap-3 ${
+                          className={`w-full text-left px-3 h-12 overflow-hidden transition flex items-center gap-3 ${
                             active
                               ? 'bg-sky-50 border-l-4 border-sky-500 rounded-md shadow-sm'
                               : 'hover:bg-gray-50 rounded-md'
                           }`}
                         >
                           <span className={`w-7 h-7 flex items-center justify-center text-xs font-semibold rounded-full ${active ? 'bg-sky-600 text-white' : 'bg-gray-200 text-gray-700'}`}>{index + 1}</span>
-                          <span className="text-sm truncate">{t.title}</span>
+                          <span className="text-sm truncate block">{t.title}</span>
                         </button>
                       );
                     })}
@@ -255,7 +331,6 @@ const Playlist = () => {
             </aside>
 
             {/* RIGHT MAIN: Topic title, large video, centered nav buttons */}
-            {/* On mobile show video first */}
             <section className="order-1 lg:order-2">
               <div className="bg-white rounded-lg border shadow-sm p-6">
                 <h2 className="text-lg font-semibold mb-4">{currentTopic?.title || 'Select a Topic'}</h2>
@@ -263,19 +338,29 @@ const Playlist = () => {
                 <div className="flex justify-center">
                   <div className="w-full max-w-3xl">
                     <div className="bg-black aspect-video relative">
+                      {/* Mobile notes button (top-right) */}
+                      <button
+                        onClick={openNotesModal}
+                        className="lg:hidden absolute top-3 right-3 z-30 inline-flex items-center gap-2 px-3 py-2 bg-white/95 text-sky-600 hover:bg-white rounded-md shadow-sm border"
+                        title="Notes"
+                      >
+                        <FileText className="h-4 w-4" />
+                        <span className="text-xs font-medium">Notes</span>
+                      </button>
+
                       <div className="absolute inset-0">
                         {currentTopic?.video ? (
-                              <iframe
-                                width="100%"
-                                height="100%"
-                                className="w-full h-full"
-                                src={getEmbedUrl(currentTopic.video, autoplay)}
-                                title={currentTopic.title}
-                                allow="autoplay; encrypted-media"
-                                allowFullScreen
-                                onLoad={() => { setIsLoadingVideo(false); setAutoplay(false); }}
-                              />
-                            ) : (
+                          <iframe
+                            width="100%"
+                            height="100%"
+                            className="w-full h-full"
+                            src={getEmbedUrl(currentTopic.video, autoplay)}
+                            title={currentTopic.title}
+                            allow="autoplay; encrypted-media"
+                            allowFullScreen
+                            onLoad={() => { setIsLoadingVideo(false); setAutoplay(false); }}
+                          />
+                        ) : (
                           <div className="w-full h-full flex items-center justify-center bg-gray-200">
                             <Play className="h-20 w-20 text-gray-400" />
                           </div>
@@ -334,6 +419,52 @@ const Playlist = () => {
                         </a>
                       )}
                     </div>
+                  </div>
+                </div>
+
+                {/* DESKTOP: Notes preview below the video (same container) */}
+                <div className="hidden lg:block mt-6 pt-4 border-t">
+                  <div className="flex items-center justify-between mb-3">
+                    <h3 className="text-base font-semibold text-gray-900">Topic Notes</h3>
+                    <div className="flex items-center gap-2">
+                      <button
+                        onClick={openNotesModal}
+                        className="inline-flex items-center gap-2 px-3 py-2 bg-sky-50 text-sky-600 hover:bg-sky-100 rounded-md text-sm"
+                      >
+                        <FileText className="h-4 w-4" />
+                        <span>View Full</span>
+                      </button>
+                      <button
+                        onClick={downloadTopicNotes}
+                        className="inline-flex items-center gap-2 px-3 py-2 bg-white border rounded-md text-sm hover:bg-gray-50"
+                        title="Download notes"
+                      >
+                        <Download className="h-4 w-4" />
+                      </button>
+                    </div>
+                  </div>
+
+                  <div className="bg-gray-50 rounded-lg border border-gray-200 overflow-hidden">
+                    {currentTopic?.pdf || currentTopic?.notes ? (
+                      currentTopic.pdf ? (
+                        <div className="w-full bg-white">
+                          <iframe
+                            src={/drive\.google\.com/.test(currentTopic.pdf) ? parseDriveUrl(currentTopic.pdf)?.embed || currentTopic.pdf : currentTopic.pdf}
+                            title="Topic PDF Preview"
+                            className="w-full h-[60vh] md:h-[48vh] border-none"
+                          />
+                        </div>
+                      ) : (
+                        <div className="p-4 text-sm text-gray-700 max-w-none whitespace-pre-wrap">
+                          {currentTopic.notes}
+                        </div>
+                      )
+                    ) : (
+                      <div className="flex flex-col items-center justify-center h-40 p-6 text-gray-400">
+                        <FileText className="h-10 w-10 mb-2 text-gray-300" />
+                        <p className="text-sm">No notes available for this topic yet. Notes will be uploaded soon.</p>
+                      </div>
+                    )}
                   </div>
                 </div>
               </div>
@@ -425,6 +556,54 @@ const Playlist = () => {
               <div className="px-4 md:px-0 text-xs text-muted-foreground border-t pt-2">
                 <p><strong>File:</strong> {unit?.title}</p>
               </div>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* NOTES MODAL: View/download topic notes (mobile & desktop full view) */}
+      {showNotesModal && (
+        <div className="fixed inset-0 z-50 flex items-end md:items-center justify-center bg-black/50 p-0 md:p-4">
+          <div className="bg-white w-full md:max-w-3xl h-screen md:h-auto md:max-h-[85vh] rounded-t-lg md:rounded-lg overflow-hidden flex flex-col">
+            <div className="flex justify-between items-center px-4 md:px-6 py-4 border-b">
+              <div>
+                <h2 className="text-lg font-semibold">{currentTopic?.title || 'Topic Notes'}</h2>
+                <p className="text-xs text-muted-foreground mt-1">{currentTopic?.title}</p>
+              </div>
+              <div className="flex items-center gap-2">
+                <button onClick={downloadTopicNotes} className="px-3 py-2 bg-sky-500 hover:bg-sky-600 text-white rounded-md text-sm flex items-center gap-2">
+                  <Download className="h-4 w-4" />
+                  <span>Download</span>
+                </button>
+                <button onClick={() => setShowNotesModal(false)} className="p-2 hover:bg-gray-100 rounded">
+                  <X className="h-5 w-5 text-gray-600" />
+                </button>
+              </div>
+            </div>
+
+            <div className="flex-1 overflow-y-auto p-4 md:p-6">
+              {notesLoading ? (
+                <div className="flex items-center justify-center h-40">
+                  <div className="animate-spin rounded-full h-10 w-10 border-b-2 border-sky-500 mx-auto"></div>
+                </div>
+              ) : notesPreviewUrl ? (
+                <div className="w-full h-full bg-white rounded overflow-hidden">
+                  <iframe src={notesPreviewUrl} title="Notes Preview" className="w-full h-[70vh] md:h-[60vh] border-none" />
+                </div>
+              ) : notesContent ? (
+                <div className="prose max-w-none">
+                  <div className="whitespace-pre-wrap text-sm md:text-base">{notesContent}</div>
+                </div>
+              ) : (
+                <div className="flex flex-col items-center justify-center h-40 text-gray-400">
+                  <FileText className="h-12 w-12 mb-2" />
+                  <p>No notes available for this topic yet. Notes will be uploaded soon.</p>
+                </div>
+              )}
+            </div>
+
+            <div className="border-t bg-gray-50 px-4 md:px-6 py-3 text-right">
+              <button onClick={() => setShowNotesModal(false)} className="px-4 py-2 bg-white border rounded-md hover:bg-gray-50">Back to Video</button>
             </div>
           </div>
         </div>

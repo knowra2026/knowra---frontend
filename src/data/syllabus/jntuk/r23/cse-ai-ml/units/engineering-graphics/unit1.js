@@ -1,27 +1,27 @@
 export default {
   unit: 1,
-  title: "Introduction to Engineering Graphics",
-  pdf: "https://drive.google.com/file/d/1egExample1/view?usp=sharing",
+  title: "Introduction, Curves & Scales",
+  pdf: "https://drive.google.com/file/d/1nPQDcCqIdXPiaug20VCLNAVCmwwrhzgm/view?usp=sharing",
   topics: [
-    {
-      title: "Basics of Technical Drawing",
-      video: "https://www.youtube.com/watch?v=2DxPpYJaJO4"
-    },
-    {
-      title: "Lines and Lettering",
-      video: "https://www.youtube.com/watch?v=FhQPCjRfFyQ"
-    },
-    {
-      title: "Geometric Constructions",
-      video: "https://www.youtube.com/watch?v=qPKjPh7LqYs"
-    },
-    {
-      title: "Scales and Dimensioning",
-      video: "https://www.youtube.com/watch?v=xAVqKz7n62g"
-    },
-    {
-      title: "Engineering Curves",
-      video: "https://www.youtube.com/watch?v=C1VqKE5qdBc"
-    }
+    // Introduction
+    { title: "Lines", video: "" },
+    { title: "Lettering", video: "" },
+    { title: "Dimensioning", video: "" },
+    { title: "Geometrical Constructions", video: "" },
+    { title: "Constructing Regular Polygons (General Methods)", video: "" },
+
+    // Curves
+    { title: "Construction of Ellipse (General Method)", video: "" },
+    { title: "Construction of Parabola (General Method)", video: "" },
+    { title: "Construction of Hyperbola (General Method)", video: "" },
+    { title: "Cycloids", video: "" },
+    { title: "Involutes", video: "" },
+    { title: "Normal to Curves", video: "" },
+    { title: "Tangent to Curves", video: "" },
+
+    // Scales
+    { title: "Plain Scales", video: "" },
+    { title: "Diagonal Scales", video: "" },
+    { title: "Vernier Scales", video: "" }
   ]
 };

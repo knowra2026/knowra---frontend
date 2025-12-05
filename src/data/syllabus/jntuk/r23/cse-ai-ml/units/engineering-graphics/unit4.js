@@ -1,27 +1,22 @@
 export default {
   unit: 4,
-  title: "Sectional Views and Development",
-  pdf: "https://drive.google.com/file/d/1egExample4/view?usp=sharing",
+  title: "Sections of Solids & Development of Surfaces",
+  pdf: "https://drive.google.com/file/d/1ErVHCehJ8YD8v6SlGfLLOTzl6jgaffHY/view?usp=sharing",
   topics: [
-    {
-      title: "Sectional Projections",
-      video: "https://www.youtube.com/watch?v=QGhP4hcZV1w"
-    },
-    {
-      title: "Section Types and Conventions",
-      video: "https://www.youtube.com/watch?v=eiNsW4qXSKI"
-    },
-    {
-      title: "Development of Surfaces",
-      video: "https://www.youtube.com/watch?v=y8Y-KVj_x_E"
-    },
-    {
-      title: "Development of Prisms and Cylinders",
-      video: "https://www.youtube.com/watch?v=hDEJyqvZVQ0"
-    },
-    {
-      title: "Development of Cone and Pyramid",
-      video: "https://www.youtube.com/watch?v=_NeVXz98d0M"
-    }
+    // Sections of Solids
+    { title: "Perpendicular Section Planes", video: "" },
+    { title: "Inclined Section Planes", video: "" },
+    { title: "Sectional Views", video: "" },
+    { title: "True Shape of Section", video: "" },
+    { title: "Sections of Solids in Simple Position Only", video: "" },
+
+    // Development of Surfaces
+    { title: "Parallel Line Development", video: "" },
+    { title: "Radial Line Development", video: "" },
+    { title: "Development of Cube", video: "" },
+    { title: "Development of Prism", video: "" },
+    { title: "Development of Cylinder", video: "" },
+    { title: "Development of Pyramid", video: "" },
+    { title: "Development of Cone", video: "" }
   ]
 };

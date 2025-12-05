@@ -1,27 +1,17 @@
 export default {
   unit: 5,
-  title: "Perspective Projections and Technical Design",
-  pdf: "https://drive.google.com/file/d/1egExample5/view?usp=sharing",
+  title: "Conversion of Views & Computer Graphics",
+  pdf: "https://drive.google.com/file/d/126cyvIMDFYIWMQSjwSPJzZirjLTaQgyy/view?usp=sharing",
   topics: [
-    {
-      title: "Perspective Projection Basics",
-      video: "https://www.youtube.com/watch?v=l1A_oHvHvKw"
-    },
-    {
-      title: "One Point Perspective",
-      video: "https://www.youtube.com/watch?v=tLOVu3pUGpA"
-    },
-    {
-      title: "Two Point Perspective",
-      video: "https://www.youtube.com/watch?v=pIIBFj2YQIM"
-    },
-    {
-      title: "Technical Sketching",
-      video: "https://www.youtube.com/watch?v=v5K8cZkFi_Y"
-    },
-    {
-      title: "Assembly Drawings",
-      video: "https://www.youtube.com/watch?v=9W6X7CUXgQQ"
-    }
+    // Conversion of Views
+    { title: "Isometric to Orthographic View Conversion", video: "" },
+    { title: "Orthographic to Isometric View Conversion", video: "" },
+
+    // Computer Graphics (AutoCAD)
+    { title: "Creating 2D Drawings using AutoCAD", video: "" },
+    { title: "Creating 3D Drawings using AutoCAD", video: "" },
+    { title: "Drawing of Objects including PCB Layouts", video: "" },
+    { title: "Transformations using AutoCAD", video: "" },
+    { title: "AutoCAD Topics (Not for End Examination)", video: "" }
   ]
 };
