@@ -3,3 +3,13 @@
 @tailwind utilities;
 
 /* Custom Form Controls */
+
+/* On small screens add bottom padding equal to the bottom nav height + safe-area inset.
+	 This keeps the floating nav from covering content without inserting a visible spacer element. */
+@media (max-width: 768px) {
+	body {
+		padding-bottom: calc(64px + env(safe-area-inset-bottom));
+	}
+	/* if any leftover spacer divs exist, hide them to avoid double spacing */
+	.nav-bottom-spacer { display: none !important; }
+}

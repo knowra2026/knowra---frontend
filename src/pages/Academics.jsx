@@ -320,6 +320,10 @@ const parseDriveUrl = (url) => {
       "CSE",
       "CSE (Artificial Intelligence and Data Science)",
       "CSE (Data Science)",
+      "CSE (Artificial Intelligence)",
+      "CSE (Artificial Intelligence and Machine Learning)",
+      "CSE (Cyber Security)",
+      "CSE (Internet of Things)",
     ],
   };
 
@@ -560,19 +564,9 @@ const parseDriveUrl = (url) => {
                       {!pdfLoading && previewUrl && (
                         <>
                           <iframe src={previewUrl} title="Syllabus PDF" className="w-full flex-1 border-none" />
-                          {/* Mobile-only: Page counter and nav at bottom */}
-                          <div className="md:hidden bg-white border-t border-gray-200 px-4 py-3 flex items-center justify-between">
-                            <button className="p-2 hover:bg-gray-100 rounded disabled:opacity-50" disabled>
-                              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
-                              </svg>
-                            </button>
+                          {/* Mobile-only: Page counter (navigation buttons removed) */}
+                          <div className="md:hidden bg-white border-t border-gray-200 px-4 py-3 flex items-center justify-center">
                             <span className="text-sm font-medium text-gray-700">Page 1 / 3</span>
-                            <button className="p-2 hover:bg-gray-100 rounded">
-                              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-                              </svg>
-                            </button>
                           </div>
                         </>
                       )}

@@ -418,37 +418,7 @@ const Subject = () => {
                     <p><strong>{modalType === "papers" ? "P" : "Q"}:</strong> {currentPdfIndex + 1}/{modalContent.length}</p>
                   </div>
 
-                  {/* NAVIGATION ARROWS - Mobile Only */}
-                  <div className="md:hidden px-4 mt-2 flex gap-2">
-                    <button
-                      onClick={() => {
-                        if (currentPdfIndex > 0) {
-                          const newIdx = currentPdfIndex - 1;
-                          setCurrentPdfIndex(newIdx);
-                          loadPdfPreview(modalContent[newIdx]);
-                        }
-                      }}
-                      disabled={currentPdfIndex === 0}
-                      className="flex-1 px-1 py-1.5 bg-gray-300 hover:bg-gray-400 disabled:opacity-50 text-gray-900 rounded text-xs font-medium transition flex items-center justify-center gap-1"
-                      title="Previous"
-                    >
-                      <ChevronLeft className="h-4 w-4" />
-                    </button>
-                    <button
-                      onClick={() => {
-                        if (currentPdfIndex < modalContent.length - 1) {
-                          const newIdx = currentPdfIndex + 1;
-                          setCurrentPdfIndex(newIdx);
-                          loadPdfPreview(modalContent[newIdx]);
-                        }
-                      }}
-                      disabled={currentPdfIndex === modalContent.length - 1}
-                      className="flex-1 px-1 py-1.5 bg-gray-300 hover:bg-gray-400 disabled:opacity-50 text-gray-900 rounded text-xs font-medium transition flex items-center justify-center gap-1"
-                      title="Next"
-                    >
-                      <ChevronRight className="h-4 w-4" />
-                    </button>
-                  </div>
+                  {/* Navigation arrows removed for mobile - only Download & Open remain */}
                 </div>
               </div>
             </div>

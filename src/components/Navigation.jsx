@@ -125,9 +125,12 @@ export const Navigation = () => {
 
         {/* spacer removed so hero background shows under the fixed header on mobile */}
 
-      {/* Mobile Navigation - Fixed Bottom */}
-      <nav className="md:hidden fixed bottom-4 left-4 right-4 z-50 bg-white/95 backdrop-blur-md rounded-2xl border border-border/20 shadow-xl">
-        <div className="flex items-center justify-around py-2 px-2">
+      {/* Mobile Navigation - Fixed Bottom (use safe-area inset; slightly slimmer) */}
+      <nav
+        className="md:hidden fixed left-4 right-4 z-50 bg-white/95 backdrop-blur-md rounded-2xl border border-border/20 shadow-xl"
+        style={{ bottom: 'calc(12px + env(safe-area-inset-bottom))' }}
+      >
+        <div className="flex items-center justify-around py-1 px-2">
           <NavLink 
             to="/" 
             className="flex flex-col items-center gap-1 text-muted-foreground transition-colors px-3 py-2 rounded-lg hover:bg-muted/40"
@@ -183,8 +186,7 @@ export const Navigation = () => {
         </div>
       </nav>
 
-      {/* spacer at bottom so the page content doesn't get hidden under the fixed bottom nav */}
-      <div className="md:hidden h-[76px]" aria-hidden="true" />
+      {/* spacer removed (use global CSS padding-bottom instead) */}
     </>
   );
 };
