@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import { sendPasswordResetEmail } from "firebase/auth";
 import { auth } from "../firebase";
 import logomark from "../assets/logo.png";
-import logoname from "../assets/Logoname.png";
+import logoname from "../assets/logoname.png";
 
 export default function Forgot() {
   const [email, setEmail] = useState("");

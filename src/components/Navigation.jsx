@@ -1,5 +1,5 @@
 import { NavLink } from "./NavLink";
-import logo from "@/assets/Logo.png";
+import logo from "@/assets/logo.png";
 import logoname from "@/assets/logoname-b.png";
 import { Home, BookOpen, GraduationCap, Bot, User, Menu, X, Info, Settings, ShieldCheck, FileText } from "lucide-react";
 import { useState } from "react";
