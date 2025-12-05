@@ -9,6 +9,68 @@ import { SYLLABUS_TREE } from "@/data/syllabus/syllabusIndex";
 
 
 
+// Stable top-level component for the college dropdown.
+// Moved out of `Academics` to avoid remounting on every parent render
+// which causes mobile keyboards to lose focus and input glitches.
+const CollegeDropdown = ({ open, onClose, query, setQuery, onSelect, university, filteredJntuk, filteredOthers }) => {
+  const containerRef = useRef(null);
+  const inputRef = useRef(null);
+
+  useEffect(() => {
+    if (!open) return;
+    const onDocClick = (e) => {
+      if (containerRef.current && !containerRef.current.contains(e.target)) {
+        onClose();
+      }
+    };
+    document.addEventListener('mousedown', onDocClick);
+    return () => document.removeEventListener('mousedown', onDocClick);
+  }, [open, onClose]);
+
+  useEffect(() => {
+    if (open) {
+      // focus after render
+      setTimeout(() => inputRef.current && inputRef.current.focus(), 0);
+    }
+  }, [open]);
+
+  if (!open) return null;
+
+  const list = university === 'jntuk'
+    ? (filteredJntuk.length ? filteredJntuk : JNTUK_COLLEGES)
+    : (filteredOthers.length ? filteredOthers : ["CBIT", "VNR VJIET", "CVSR"]);
+
+  return (
+    <div ref={containerRef} className="absolute z-50 left-0 mt-1 bg-white text-black border shadow-md rounded-md max-h-80 overflow-hidden w-full md:w-auto md:min-w-[36rem] lg:min-w-[48rem]">
+      <div className="p-2 border-b sticky top-0 bg-white">
+        <input
+          ref={inputRef}
+          aria-label="Search colleges"
+          type="text"
+          value={query}
+          onChange={(e) => setQuery(e.target.value)}
+          className="w-full px-3 py-2 border rounded-md text-sm bg-white text-black"
+          placeholder="Search colleges..."
+        />
+      </div>
+
+      <div className="max-h-64 overflow-auto">
+        {list.map((clg) => (
+          <div
+            key={clg}
+            role="option"
+            onMouseDown={(e) => e.preventDefault()}
+            onClick={() => onSelect(clg)}
+            className="px-4 py-2 hover:bg-sky-500 hover:text-white cursor-pointer truncate whitespace-nowrap overflow-hidden transition-colors"
+          >
+            <span className="block truncate">{clg}</span>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+};
+
 const Academics = () => {
   const [university, setUniversity] = useState("");
   const [college, setCollege] = useState("");
@@ -258,68 +320,7 @@ const parseDriveUrl = (url) => {
       "CSE",
       "CSE (Artificial Intelligence and Data Science)",
       "CSE (Data Science)",
-      "CSE (Artificial Intelligence)",
-      "CSE (Artificial Intelligence and Machine Learning)",
-      "CSE (Cyber Security)",
-      "CSE (Internet of Things)",
-    ],
-  };
 
-  // Small inner component: dropdown for colleges
-  const CollegeDropdown = ({ open, onClose, query, setQuery, onSelect, university, filteredJntuk, filteredOthers }) => {
-    const containerRef = useRef(null);
-    const inputRef = useRef(null);
-
-    useEffect(() => {
-      if (!open) return;
-      const onDocClick = (e) => {
-        if (containerRef.current && !containerRef.current.contains(e.target)) {
-          onClose();
-        }
-      };
-      document.addEventListener('mousedown', onDocClick);
-      return () => document.removeEventListener('mousedown', onDocClick);
-    }, [open, onClose]);
-
-    useEffect(() => {
-      if (open) {
-        // focus after render
-        setTimeout(() => inputRef.current && inputRef.current.focus(), 0);
-      }
-    }, [open]);
-
-    if (!open) return null;
-
-    const list = university === 'jntuk'
-      ? (filteredJntuk.length ? filteredJntuk : JNTUK_COLLEGES)
-      : (filteredOthers.length ? filteredOthers : ["CBIT", "VNR VJIET", "CVSR"]);
-
-
-
-
-    return (
-      <div ref={containerRef} className="absolute z-50 left-0 mt-1 bg-white text-black border shadow-md rounded-md max-h-80 overflow-hidden w-full md:w-auto md:min-w-[36rem] lg:min-w-[48rem]">
-        <div className="p-2 border-b sticky top-0 bg-white">
-          <input
-            ref={inputRef}
-            aria-label="Search colleges"
-            type="text"
-            value={query}
-            onChange={(e) => setQuery(e.target.value)}
-            className="w-full px-3 py-2 border rounded-md text-sm bg-white text-black"
-            placeholder="Search colleges..."
-          />
-        </div>
-
-        <div className="max-h-64 overflow-auto">
-          {list.map((clg, i) => (
-            <div
-              key={i}
-              role="option"
-              onMouseDown={(e) => e.preventDefault()}
-              onClick={() => onSelect(clg)}
-              className="px-4 py-2 hover:bg-sky-500 hover:text-white cursor-pointer truncate whitespace-nowrap overflow-hidden transition-colors"
-            >
               <span className="block truncate">{clg}</span>
             </div>
           ))}
