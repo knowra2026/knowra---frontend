@@ -5,3 +5,8 @@
 [build.environment]
   NODE_VERSION = "20.19.0"
   ROLLUP_DISABLE_NATIVE = "1"
+
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200
