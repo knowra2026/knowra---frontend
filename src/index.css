@@ -2,6 +2,36 @@
 @tailwind components;
 @tailwind utilities;
 
+/* ===== MOBILE ZOOM PREVENTION ===== */
+/* Prevent pinch zoom and double-tap zoom on all devices */
+html, body {
+	touch-action: manipulation;
+	-webkit-touch-callout: none;
+	-webkit-user-select: none;
+	-webkit-text-size-adjust: 100%;
+	-ms-text-size-adjust: 100%;
+}
+
+/* Allow text selection in inputs */
+input, textarea, select {
+	-webkit-user-select: text;
+	user-select: text;
+}
+
+/* Prevent zoom on input focus (iOS issue) */
+@media (max-width: 1024px) {
+	input[type="text"],
+	input[type="email"],
+	input[type="password"],
+	input[type="search"],
+	input[type="number"],
+	textarea,
+	select {
+		font-size: 16px !important;
+		min-height: 44px;
+	}
+}
+
 /* Custom Form Controls */
 
 /* On small screens add bottom padding equal to the bottom nav height + safe-area inset.
@@ -13,6 +43,7 @@
 		padding-bottom: calc(72px + env(safe-area-inset-bottom));
 		/* ensure background extends under nav but interactive content doesn't get covered */
 		box-sizing: border-box;
+		overflow-x: hidden;
 	}
 
 	/* if any leftover spacer divs exist, hide them to avoid double spacing */

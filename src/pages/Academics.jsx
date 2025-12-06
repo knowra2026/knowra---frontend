@@ -587,10 +587,10 @@ const parseDriveUrl = (url) => {
 
               {/* PDF Viewer Modal (responsive) */}
               {openPdf && (
-                <div className="fixed inset-0 z-50 flex items-end md:items-center justify-center bg-black/50 p-0 md:p-4">
-                  <div className="bg-white w-full md:max-w-5xl h-screen md:h-[80vh] rounded-t-lg md:rounded-lg overflow-hidden flex flex-col md:grid md:grid-cols-[2fr,1fr]">
+                <div className="fixed inset-0 z-50 flex items-end md:items-center justify-center bg-black/50 p-0 md:p-4 touch-none select-none" style={{ touchAction: 'none', WebkitTouchCallout: 'none' }}>
+                  <div className="bg-white w-full md:max-w-5xl h-screen md:h-[80vh] rounded-t-lg md:rounded-lg overflow-hidden flex flex-col md:grid md:grid-cols-[2fr,1fr] touch-none" style={{ touchAction: 'none' }}>
                     {/* PDF Viewer Area - takes more space */}
-                    <div className="flex-1 bg-gray-100 flex flex-col relative md:order-1 order-1">
+                    <div className="flex-1 bg-gray-100 flex flex-col relative md:order-1 order-1 touch-none" style={{ touchAction: 'pan-x pan-y', WebkitUserSelect: 'none' }}>
                       {pdfLoading && (
                         <div className="flex items-center justify-center h-full">Preparing syllabus preview...</div>
                       )}
@@ -599,9 +599,9 @@ const parseDriveUrl = (url) => {
                       )}
                       {!pdfLoading && previewUrl && (
                         <>
-                          <iframe src={previewUrl} title="Syllabus PDF" className="w-full flex-1 border-none" />
+                          <iframe src={previewUrl} title="Syllabus PDF" className="w-full flex-1 border-none" style={{ WebkitTouchCallout: 'none', WebkitUserSelect: 'none', touchAction: 'pan-x pan-y' }} />
                           {/* Mobile-only: Page counter (navigation buttons removed) */}
-                          <div className="md:hidden bg-white border-t border-gray-200 px-4 py-3 flex items-center justify-center">
+                          <div className="md:hidden bg-white border-t border-gray-200 px-4 py-3 flex items-center justify-center touch-none">
                             <span className="text-sm font-medium text-gray-700">Page 1 / 3</span>
                           </div>
                         </>
