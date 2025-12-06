@@ -15,8 +15,7 @@ export default defineConfig({
     include: [
       'react-pdf',
       '@use-gesture/react',
-      'prop-types',
-      'pdfjs-dist'
+      'prop-types'
     ]
   },
   server: {

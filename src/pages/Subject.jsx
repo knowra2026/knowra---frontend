@@ -131,8 +131,8 @@ const Subject = () => {
       if (/drive\.google\.com/.test(url)) {
         const conv = parseDriveUrl(url);
         if (conv) {
-          // Use direct download URL for react-pdf (iframe embed won't work for fetching)
-          setPreviewUrl(conv.download);
+          // Use embed URL for Google Drive
+          setPreviewUrl(conv.embed);
           setPdfLoading(false);
           return;
         }
@@ -346,7 +346,7 @@ const Subject = () => {
                 {/* MAIN PREVIEW AREA - ALLOWS PINCH ZOOM */}
                 <div
                   className="flex-1 bg-gray-100 overflow-auto flex flex-col items-center justify-center p-4 md:p-6"
-                  style={{ touchAction: 'pan-y', WebkitOverflowScrolling: 'touch' }}
+                  style={{ touchAction: 'pan-y pinch-zoom', WebkitOverflowScrolling: 'touch' }}
                 >
                   {pdfLoading && (
                     <div className="text-center">

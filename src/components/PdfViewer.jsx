@@ -1,14 +1,13 @@
 import { useState } from "react";
 import { Document, Page, pdfjs } from "react-pdf";
-// Import bundled worker so Vite can serve it correctly
 import { useGesture } from "@use-gesture/react";
 import PropTypes from "prop-types";
 // Update the import paths for CSS files
 import "react-pdf/dist/Page/AnnotationLayer.css";
 import "react-pdf/dist/Page/TextLayer.css";
 
-// Use bundled worker file served by Vite — use URL to the mjs worker
-pdfjs.GlobalWorkerOptions.workerSrc = new URL('pdfjs-dist/build/pdf.worker.mjs', import.meta.url).toString();
+// Set workerSrc for pdfjs
+pdfjs.GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjs.version}/pdf.worker.min.js`;
 
 export default function PdfViewer({ file }) {
   const [scale, setScale] = useState(1);
