@@ -87,6 +87,7 @@ const Academics = () => {
   const [pdfError, setPdfError] = useState("");
   const [previewUrl, setPreviewUrl] = useState("");
   const [pdfPageCount, setPdfPageCount] = useState(0);
+  const subjectsRef = useRef(null);
 
   // Restore persisted selections from localStorage on mount
   useEffect(() => {
@@ -141,6 +142,31 @@ const getSubjects = () => {
   return data?.subjects || [];
 };
 const subjects = getSubjects();
+
+  // Manually scroll to subjects section (called by Submit button on mobile)
+  const scrollToSubjects = () => {
+    setTimeout(() => {
+      try {
+        const el = subjectsRef.current;
+        if (el) {
+          // Compute a small top offset so the grid isn't hidden under any fixed headers
+          const topOffset = 16; // px from top
+
+          // Scroll so the element's top sits `topOffset` px below the viewport top
+          const top = el.getBoundingClientRect().top + window.scrollY - topOffset;
+          window.scrollTo({ top, behavior: 'smooth' });
+
+          // For accessibility, focus the first link inside the subjects container
+          const firstLink = el.querySelector('a');
+          if (firstLink && typeof firstLink.focus === 'function') {
+            setTimeout(() => firstLink.focus(), 300);
+          }
+        }
+      } catch (e) {
+        // ignore
+      }
+    }, 100);
+  };
 const getSyllabusPdf = () => {
   const uni = university;
   const reg = regulation;
@@ -505,6 +531,16 @@ const parseDriveUrl = (url) => {
               </SelectContent>
             </Select>
 
+            {/* Mobile-only Submit Button */}
+            {showSubjects && (
+              <button
+                onClick={scrollToSubjects}
+                className="md:hidden w-full px-4 py-2 bg-sky-500 hover:bg-sky-600 text-white font-semibold rounded-lg transition"
+              >
+                View Subjects
+              </button>
+            )}
+
           </div>
 
           {/* --- Subjects Section --- */}
@@ -607,7 +643,7 @@ const parseDriveUrl = (url) => {
                 </div>
               )}
 
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+              <div ref={subjectsRef} className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 pb-36 md:pb-0">
                 {subjects.map((subject) => (
                   <Link
                     key={subject.id}

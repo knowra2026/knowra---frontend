@@ -18,11 +18,9 @@ const Index = () => {
       
       {/* Hero Section */}
         <section
-          className="pt-14 md:pt-28 pb-12 px-4 relative overflow-hidden"
+          className="pt-14 md:pt-28 pb-12 px-4 relative overflow-hidden bg-cover bg-center md:bg-[position:50%_35%]"
           style={{
             backgroundImage: `url(${heroBg})`,
-            backgroundSize: 'cover',
-            backgroundPosition: 'center',
           }}
         >
           {/* On mobile leave space at the top so the nav stays on a white background.
