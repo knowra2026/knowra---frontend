@@ -9,5 +9,20 @@ export default defineConfig({
     alias: {
       '@': path.resolve(__dirname, 'src')
     }
+  },
+  // Optimize specific deps that Vite sometimes fails to pre-bundle automatically
+  optimizeDeps: {
+    include: [
+      'react-pdf',
+      '@use-gesture/react',
+      'prop-types',
+      'pdfjs-dist'
+    ]
+  },
+  server: {
+    hmr: {
+      // disable the overlay during debugging of optimizeDeps errors
+      overlay: false
+    }
   }
 })

@@ -457,6 +457,7 @@ const Playlist = () => {
                             src={/drive\.google\.com/.test(currentTopic.pdf) ? parseDriveUrl(currentTopic.pdf)?.embed || currentTopic.pdf : currentTopic.pdf}
                             title="Topic PDF Preview"
                             className="w-full h-[60vh] md:h-[48vh] border-none"
+                            style={{ touchAction: 'pinch-zoom', WebkitOverflowScrolling: 'touch' }}
                           />
                         </div>
                       ) : (
@@ -485,7 +486,10 @@ const Playlist = () => {
           <div className="bg-white w-full md:max-w-5xl h-screen md:h-[80vh] rounded-t-lg md:rounded-lg overflow-hidden flex flex-col md:grid md:grid-cols-[1fr_280px]">
             
             {/* MAIN PREVIEW AREA - ALLOWS PINCH ZOOM */}
-            <div className="flex-1 bg-gray-100 overflow-auto flex flex-col items-center justify-center p-4 md:p-6" style={{ touchAction: 'pinch-zoom' }}>
+            <div
+              className="flex-1 bg-gray-100 overflow-auto flex flex-col items-center justify-center p-4 md:p-6"
+              style={{ touchAction: 'pan-y pinch-zoom', WebkitOverflowScrolling: 'touch' }}
+            >
               {pdfLoading && (
                 <div className="text-center">
                   <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-sky-500 mx-auto mb-3"></div>
@@ -494,12 +498,12 @@ const Playlist = () => {
               )}
               {!pdfLoading && previewUrl && (
                 <div className="w-full h-full bg-white rounded-lg shadow overflow-hidden">
-                  <iframe 
-                    src={previewUrl} 
-                    title="Unit PDF Document" 
+                  <iframe
+                    src={previewUrl}
+                    title="Unit PDF Document"
                     className="w-full h-full border-none"
                     allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                    style={{ touchAction: 'pinch-zoom' }}
+                    style={{ touchAction: 'pinch-zoom', WebkitOverflowScrolling: 'touch' }}
                   />
                 </div>
               )}
@@ -594,7 +598,7 @@ const Playlist = () => {
                 </div>
               ) : notesPreviewUrl ? (
                 <div className="w-full h-full bg-white rounded overflow-hidden">
-                  <iframe src={notesPreviewUrl} title="Notes Preview" className="w-full h-[70vh] md:h-[60vh] border-none" />
+                  <iframe src={notesPreviewUrl} title="Notes Preview" className="w-full h-[70vh] md:h-[60vh] border-none" style={{ touchAction: 'pinch-zoom', WebkitOverflowScrolling: 'touch' }} />
                 </div>
               ) : notesContent ? (
                 <div className="prose max-w-none">
